@@ -1,10 +1,17 @@
-from django.core import serializers
 from django.shortcuts import HttpResponse
-from app.services.conn import *
+from bson import ObjectId
 
+#
+#args[0]: Collection to look in
 
+#Gets one object by ObjectId
+def GetOneById(*args):
+    return args[0].find({"_id": ObjectId(args[1])})
 
-def GetOne():
-    return user.find_one()
-        
+#Gets objects related to the objected used when calling function
+def GetRelation(*args):
+    return 
 
+#Gets all objects in collection
+def GetAll(*args):
+    return args[0].find()
