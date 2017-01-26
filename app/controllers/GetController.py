@@ -29,4 +29,4 @@ def PostUser(request):
     return HttpResponse(1)
 
 def search(coll, term):
-    return  coll + term
+    return  coll + term + ""
