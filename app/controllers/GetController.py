@@ -27,3 +27,6 @@ def PostUser(request):
     }
     PostService.InsertData(user, data)
     return HttpResponse(1)
+
+def search(coll, term):
+    return  coll + term
