@@ -10,5 +10,9 @@ client = MongoClient('88.131.100.92')
 #Get idela database
 db = client['idela']
 
-#go to user collection
+#Defining collections in idela database
 user = db.user
+node = db.node
+tag = db.tag
+feedback = db.feedback
+softdelete = db.softdelete

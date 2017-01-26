@@ -1,17 +1,23 @@
-from django.shortcuts import HttpResponse
 from bson import ObjectId
 
-#
-#args[0]: Collection to look in
+#How args are used
+#args[0]: Collection to search in
+#args[1]: ObjectId
+#args[2]: Relation Collection to search in 
 
-#Gets one object by ObjectId
-def GetOneById(*args):
-    return args[0].find({"_id": ObjectId(args[1])})
+#Gets one object by its ObjectId
+def GetById(*args):
+    #Add validation
+    result = args[0].find({"_id": ObjectId(args[1])})
+    return result
 
-#Gets objects related to the objected used when calling function
-def GetRelation(*args):
-    return 
+def GetRelations(*args):
+    result = args[0].find({"_id": ObjectId(args[1])},{"nodes":1})
+    result = args[2].find({"_id":{"$in":result["node"]}})
+    return result
 
 #Gets all objects in collection
 def GetAll(*args):
-    return args[0].find()
+    #Add validation
+    result = args[0].find()
+    return result
