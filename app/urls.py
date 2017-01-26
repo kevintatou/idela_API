@@ -1,7 +1,7 @@
 from django.conf.urls import url
 
 #Defining controllers being used
-from app.controllers import UserController
+from app.controllers import GetController
 
 urlpatterns = [
     #User URLs
