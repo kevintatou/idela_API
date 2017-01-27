@@ -1,4 +1,5 @@
 from bson import ObjectId
+import re
 
 #How args are used
 #args[0]: Collection to search in
@@ -12,8 +13,16 @@ def GetById(*args):
     return result
 
 def GetRelations(*args):
-    result = args[0].find({"_id": ObjectId(args[1])},{"nodes":1})
-    result = args[2].find({"_id":{"$in":result["node"]}})
+    value_list = []
+
+    query = args[0].find({"_id": ObjectId(args[1])}).distinct("nodes")
+
+    for value in query:
+        converted_value = ObjectId(value)
+        value_list.append(converted_value)
+    
+    result = args[2].find({"_id":{ "$in": relation_list}})
+        
     return result
 
 #Gets all objects in collection
