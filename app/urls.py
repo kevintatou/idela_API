@@ -9,5 +9,6 @@ urlpatterns = [
     url(r'^get/(?P<collection>\w+)/(?P<id>\w+)/$', GetController.GetById, name='GetUser'),
     url(r'^get/(?P<collection>\w+)/$', GetController.GetAll, name='GetAllUsers'),
     url(r'^get/(?P<collection>\w+)/(?P<id>\w+)/(?P<relationcollection>\w+)/$', GetController.GetRelations, name='GetUserNodeRelations'),
-    url(r'^get/search/coll=(?P<coll>\w+)&term=(?P<term>\w+)/$', GetController.search, name='search')
+    url(r'^search/(?P<coll>.+)/$', GetController.search, name='search')
 ]
+
