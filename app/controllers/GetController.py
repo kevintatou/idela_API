@@ -1,9 +1,9 @@
 #Change from using eval at a later date
 
-
+import json
 from django.shortcuts import HttpResponse
 #from django.core import serializers
-from bson.json_util import dumps
+from bson.json_util import dumps, loads
 from app.services.conn import *
 #Defining services
 from app.services import PostService, GetService
@@ -28,5 +28,12 @@ def PostUser(request):
     PostService.InsertData(user, data)
     return HttpResponse(1)
 
-def search(request, coll):
-    return HttpResponse(coll)
+def search(request, coll = ''):
+    # Gets the parameter coll from URI and turns the string to code
+    collection = request.GET.get('coll')
+    
+    return HttpResponse(collection.find({}))
+    #if (collection == "user"):
+        #coll = json.loads(collection)
+    #else:
+    #    return HttpResponse("rip")
