@@ -1,11 +1,13 @@
+#-------------------------------------------------------------------------
 #Change from using eval at a later date (use split instead?)
+#-------------------------------------------------------------------------
 
 from django.shortcuts import HttpResponse
 #from django.core import serializers
 from bson.json_util import dumps
 from app.services.conn import *
 #Defining services
-from app.services import PostService, GetService
+from app.services import GetService
 
 #Calls GetService to get one user in the user collection by its ObjectId
 def GetById(request, collection, id):
@@ -17,15 +19,6 @@ def GetAll(request, collection):
 
 def GetRelations(request, collection, id, relationcollection, field):
     return HttpResponse(dumps(GetService.GetRelations(eval(collection), id, eval(relationcollection), field)))
-
-# MOVE THIS TO POSTCONTROLLER
-# Post User data
-def PostUser(request):
-    data = {
-        
-    }
-    PostService.InsertData(user, data)
-    return HttpResponse(1)
 
 def search(coll, term):
     return  coll + term + ""
