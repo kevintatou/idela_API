@@ -8,15 +8,15 @@
 
 ##API Docs
 ### Get Requests
-/get/**collection**/
+/get/`collection`/
 ```
 Gets all objects from collection
 ```
-/get/**collection**/**id**
+/get/`collection`/`id`
 ```
 Gets a single object by ObjectId from collection
 ```
-/get/**collection**/**id**/**field**/**relation_collection**/
+/get/`collection`/`id`/`field`/`relation_collection`/
 ```
 Gets object by ObjectId from collection and selects field then 
 uses values in field to get objects in related_collection by ObjectId
