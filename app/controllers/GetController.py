@@ -17,8 +17,8 @@ def GetById(request, collection, id):
 def GetAll(request, collection):
     return HttpResponse(dumps(GetService.GetAll(eval(collection))))
 
-def GetRelations(request, collection, id, relationcollection, field):
-    return HttpResponse(dumps(GetService.GetRelations(eval(collection), id, eval(relationcollection), field)))
+def GetRelations(request, collection, id, field, relationcollection):
+    return HttpResponse(dumps(GetService.GetRelations(eval(collection), id, field, eval(relationcollection))))
 
 def search(coll, term):
     return  coll + term + ""
