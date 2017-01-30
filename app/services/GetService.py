@@ -1,7 +1,7 @@
 from bson import ObjectId
 #How args are used
 #args[0]: Collection to search in
-#args[1]: ObjectId
+#args[1]: ObjectIdg
 #args[2]: Field to get
 #args[3]: Relation Collection to search in
 
