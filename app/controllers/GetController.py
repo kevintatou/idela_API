@@ -1,6 +1,5 @@
 #Change from using eval at a later date (use split instead?)
 
-
 from django.shortcuts import HttpResponse
 #from django.core import serializers
 from bson.json_util import dumps

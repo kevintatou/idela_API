@@ -12,3 +12,5 @@ urlpatterns = [
     #Post URLs
     url(r'^post/$', GetController.PostUser, name='PostUser'),
 ]
+
+#url(r'^get/coll=(?P<collection>\w+)&(?P<field>\w+)=(?P<value>\w+)&rel_coll=(?P<relationcollection>\w+)&rel_coll_field=(?P<relationfield>\w+)/$
