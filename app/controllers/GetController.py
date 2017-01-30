@@ -20,5 +20,14 @@ def GetAll(request, collection):
 def GetRelations(request, collection, id, field, relationcollection):
     return HttpResponse(dumps(GetService.GetRelations(eval(collection), id, field, eval(relationcollection))))
 
+#coll=collection>
+#(?P<field>\w+)=(?P<value>\w+)&
+#rel_coll=(?P<relationcollection>\w+)&
+#rel_coll_field=(?P<relationfield>\w+)/$
+def Test(request, catch_all):
+    catch_all = dict(item.split("=") for item in catch_all.split("&"))
+    print(catch_all)
+    return HttpResponse(dumps(catch_all))
+
 def search(coll, term):
     return  coll + term + ""

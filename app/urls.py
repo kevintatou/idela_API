@@ -10,6 +10,6 @@ urlpatterns = [
     url(r'^get/search/coll=(?P<coll>\w+)&term=(?P<term>\w+)/$', GetController.search, name='search'),
     #Post URLs
     url(r'^post/$', PostController.PostUser, name='PostUser'),
+    #Test
+    url(r'^test/(?P<catch_all>.*)$', GetController.Test, name='Test'),
 ]
-
-#url(r'^get/coll=(?P<collection>\w+)&(?P<field>\w+)=(?P<value>\w+)&rel_coll=(?P<relationcollection>\w+)&rel_coll_field=(?P<relationfield>\w+)/$
