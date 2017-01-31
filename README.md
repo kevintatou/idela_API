@@ -1,10 +1,11 @@
 ##Setup
 1. Install Python v3.5.2
-2. Install Django v1.10.4
-3. git clone https://github.com/kevintatou/idela_API.git
-4. cd idela_API
-5. py manage.py runserver
-6. Go to localhost:8000/
+3. Install Django v1.10.4
+4. git clone https://github.com/kevintatou/idela_API.git
+5. pip install pymongo
+6. cd idela_API
+7. py manage.py runserver
+8. Go to localhost:8000/
 
 ##API Docs
 ### Get Requests
@@ -36,7 +37,7 @@ Gets everythings where `term`=`value` and `term2`=`value2`.
 ```
 Gets all documents from 'collection' named 'node' in the database.
 ```
-/get/`col`=`node`&`name`=`liam`
+/get/`col`=`node`&`name`=`LiamNode`
 ```
 Gets all documents from 'collection' named 'node' in the database 
 where field name is 'name' and has the value of 'liam'.
