@@ -34,11 +34,11 @@ Gets everythings where `term`=`value` and `term2`=`value2`.
 #### Get Requests - Example
 /get/`col`=`node`
 ```
-Gets all objects from 'collection' named 'node' in the database.
+Gets all documents from 'collection' named 'node' in the database.
 ```
 /get/`col`=`node`&`name`=`liam`
 ```
-Gets all objects from 'collection' named 'node' in the database 
+Gets all documents from 'collection' named 'node' in the database 
 where field name is 'name' and has the value of 'liam'.
 ```
 ***Note: Unlimited amount of filters allowed***
