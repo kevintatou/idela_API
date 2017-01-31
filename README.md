@@ -41,7 +41,7 @@ Gets all objects from 'collection' named 'node' in the database .
 Gets all objects from 'collection' named 'node' in the database 
 where field name is 'name' and has the value of 'liam'.
 ```
-***Unlimited amount of filters allowed***
+***Note: Unlimited amount of filters allowed***
 ### Post Requests
 /post
 ```
