@@ -17,7 +17,6 @@ Gets everythings where `term`=`value`.
 ```
 Gets everythings where `term`=`value` and `term2`=`value2`.
 ```
-***Unlimited amount of filters allowed***
 #### Get Requests - Allowed Terms
 'alias',
 'col',
@@ -48,6 +47,7 @@ Gets all objects from 'collection' named 'node' in the database
 where field name is 'name' and has the value of 'liam' and also
 where field name is 'tags' and has the value of 'liamtag'. 
 ```
+***Unlimited amount of filters allowed***
 ### Post Requests
 /post
 ```
