@@ -16,8 +16,8 @@ from app.services import GetService
 
 #Calls GetService to get one user in the user collection by its ObjectId
 def GetById(request, collection, id):
-    #return HttpResponse(dumps(GetService.GetById(eval(collection), id)))
-    return HttpResponse("ok")
+    return HttpResponse(dumps(GetService.GetById(eval(collection), id)))
+    #return HttpResponse("ok")
 #Calls GetService to get all users
 def GetAll(request, collection):
     return HttpResponse(dumps(GetService.GetAll(eval(collection))))
