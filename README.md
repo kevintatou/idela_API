@@ -45,7 +45,7 @@ where field name is 'name' and has the value of 'liam'.
 ```
 Gets all objects from 'collection' named 'node' in the database 
 where field name is 'name' and has the value of 'liam' and also
-where field name is 'tags' and has the value of 'liamtag'. 
+where field name is 'tags' and has the value of 'LiamTag'. 
 ```
 ***Unlimited amount of filters allowed***
 ### Post Requests
