@@ -41,7 +41,7 @@ Gets all documents from 'collection' named 'node' in the database.
 Gets all documents from 'collection' named 'node' in the database 
 where field name is 'name' and has the value of 'liam'.
 ```
-***Note: Unlimited amount of filters allowed***
+***Note: Unlimited amount of filters allowed, but do NOT duplicate***
 ### Post Requests
 /post
 ```
