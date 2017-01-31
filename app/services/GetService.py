@@ -1,9 +1,4 @@
-from bson import ObjectId
-#How args are used
-#args[0]: Collection to search in
-#args[1]: ObjectIdg
-#args[2]: Field to get
-#args[3]: Relation Collection to search in
+from app.services.conn import *
 
 #Gets one object by its ObjectId
 def GetById(*args):
@@ -31,4 +26,8 @@ def GetRelations(*args):
 def GetAll(*args):
     #Add validation
     result = args[0].find()
+    return result
+
+def GetRequest(*args):
+    result = eval(args[0]).find(args[1])
     return result
