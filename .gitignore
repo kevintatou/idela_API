@@ -98,7 +98,6 @@ idela/__init__.py
 
 app/services/conn.py
 
-
 app/__pycache__/
 app/controllers/__pycache__/
 app/services/__pycache__/
