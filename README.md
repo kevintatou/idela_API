@@ -8,18 +8,45 @@
 
 ##API Docs
 ### Get Requests
-/get/`collection`/
+#### Get Requests - Bare-bones
+/get/`term`=`value` 
 ```
-Gets all objects from collection
+Gets everythings where `term`=`value`.
 ```
-/get/`collection`/`id`
+/get/`term1`=`value1`&`term2`=`value2`
 ```
-Gets a single object by ObjectId from collection
+Gets everythings where `term`=`value` and `term2`=`value2`.
 ```
-/get/`collection`/`id`/`field`/`relation_collection`/
+***Unlimited amount of filters allowed***
+#### Get Requests - Allowed Terms
+'alias',
+'col',
+'date',
+'email'
+'id',
+'media',
+'name',
+'nodes',
+'public',
+'tags',
+'trending',
+'views',
+'weekly',
+#### Get Requests - Example
+/get/`col`=`node`
 ```
-Gets object by ObjectId from collection and selects field then 
-uses values in field to get objects in related_collection by ObjectId
+Gets all objects from 'collection' named 'node' in the database .
+```
+/get/`col`=`node`&`name`=`liam`
+```
+Gets all objects from 'collection' named 'node' in the database 
+where field name is 'name' and has the value of 'liam'.
+```
+/get/`col`=`node`&`name`=`liam`&`tags`=`LiamTag`
+```
+Gets all objects from 'collection' named 'node' in the database 
+where field name is 'name' and has the value of 'liam' and also
+where field name is 'tags' and has the value of 'liamtag'. 
 ```
 ### Post Requests
 /post
