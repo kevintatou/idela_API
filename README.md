@@ -34,7 +34,7 @@ Gets everythings where `term`=`value` and `term2`=`value2`.
 #### Get Requests - Example
 /get/`col`=`node`
 ```
-Gets all objects from 'collection' named 'node' in the database .
+Gets all objects from 'collection' named 'node' in the database.
 ```
 /get/`col`=`node`&`name`=`liam`
 ```
