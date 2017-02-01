@@ -4,7 +4,6 @@ from app.services.conn import *
 #Defining services
 from app.services import GetService, ValidateService
 import time
-from time import sleep
 
 def Get(request, catch_all):
     #Fetches time
@@ -12,10 +11,8 @@ def Get(request, catch_all):
 
     #Catches URL and converts terms and values into a dict
     catch_all = dict(term.split("=") for term in catch_all.split("&"))
-    
     #Validate for mongodb query use
     dict1 = ValidateService.ValidateGetTerms(catch_all)
-    print(dict1)
     #Makes a get request
     result = GetService.GetRequest(dict1)
 
