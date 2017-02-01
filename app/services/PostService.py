@@ -4,3 +4,4 @@ import datetime
 def InsertData(*args):
     args[1]['date'] = datetime.datetime.utcnow()
     args[0].insert_one(args[1])
+    
