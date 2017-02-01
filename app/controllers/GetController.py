@@ -3,15 +3,24 @@ from bson.json_util import dumps
 from app.services.conn import *
 #Defining services
 from app.services import GetService, ValidateService
+import time
+from time import sleep
 
 def Get(request, catch_all):
-    #Catches URL and converts items and values into a dict
-    catch_all = dict(item.split("=") for item in catch_all.split("&"))
+    #Fetches time
+    start_time = time.monotonic()
+
+    #Catches URL and converts terms and values into a dict
+    catch_all = dict(term.split("=") for term in catch_all.split("&"))
     
     #Validate for mongodb query use
     dict1 = ValidateService.ValidateGetTerms(catch_all)
-
+    print(dict1)
     #Makes a get request
     result = GetService.GetRequest(dict1)
-    
+
+    #Fetches time and subtracts it with time at start
+    elapsed_time = time.monotonic() - start_time
+    print("API GetController process took:", elapsed_time, "sec")
+
     return HttpResponse(dumps(result))
