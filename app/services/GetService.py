@@ -9,7 +9,6 @@ def GetRequest(req_values):
     select = None
     collection = None
     attribute = None
-
     #Check for existing keys and adds those values into a variable
     for item in req_values:
         if item == 'select':

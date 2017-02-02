@@ -15,7 +15,7 @@ def ValidateGetTerms(dict1):
     #Query to find multiple objects by ObjectIds
     #collection.find({"_id":{ "$in": [id, id]}})
 
-    #Checks if items in URL are valid
+    #Checks if items are valid
     for term in allowed_terms:
         for dict1_item in dict1:
             if dict1_item == term:
@@ -31,7 +31,7 @@ def ValidateGetTerms(dict1):
                     #Changes col key and puts value in it 
                     elif dict1_item == 'col':
                         for collection in db_collections:
-                            #Checks if collection is valid by comparison
+                            #Checks if collection is valid by comparison to db_collections
                             if collection == dict1.get(dict1_item):
                                 result['collection'] = [dict1.get(dict1_item)]
                     #Puts value in select key

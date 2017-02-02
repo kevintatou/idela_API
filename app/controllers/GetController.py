@@ -11,8 +11,10 @@ def Get(request, catch_all):
 
     #Catches URL and converts terms and values into a dict
     catch_all = dict(term.split("=") for term in catch_all.split("&"))
+    
     #Validate for mongodb query use
     dict1 = ValidateService.ValidateGetTerms(catch_all)
+
     #Makes a get request
     result = GetService.GetRequest(dict1)
 
