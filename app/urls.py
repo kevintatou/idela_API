@@ -6,6 +6,7 @@ urlpatterns = [
     #Get URL(s)
     url(r'^get/(?P<catch_all>.*)$', GetController.Get, name='Get'),
     #Post URL(s)
-    url(r'^post/(?P<catch_all>.*)$', PostController.Post, name='Post'),
+    #url(r'^post/(?P<catch_all>.*)$', PostController.PostUser, name='Post'),
+    url(r'^post/', PostController.PostUser, name='Post'),
 ]
 

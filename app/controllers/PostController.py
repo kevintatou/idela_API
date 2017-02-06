@@ -1,26 +1,58 @@
 from django.shortcuts import HttpResponse
 from app.services.conn import *
 #Defining services
-from app.services import PostService, ValidateService
-import time
 
-# Post data
-def Post(request, catch_all):
-    result = ""
+from app.services import PostService
+import datetime
+import random
+from bson import ObjectId
+from faker import Faker
+fake = Faker()
 
-    #Fetches time
-    start_time = time.monotonic()
+# Post User data
+def PostUser(request):
+    date = datetime.datetime.utcnow()
+    name = fake.name()
+    text = fake.text()
+    rand_100 = random.randint(1,100)
 
-    #Catches URL and converts terms and values into a dict
-    catch_all = dict(term.split("=") for term in catch_all.split("&"))
 
-    #Validate for mongodb query use
-    dict1 = ValidateService.ValidateGetTerms(catch_all)
+    data = {
+            "date" : date,
+            "weekly" : rand_100,
+            "tags" : [ 
+                text[1:10], 
+                text[1:6],
+                text[1:10],
+                text[1:10]
+            ],
+            "desc" : text,
+            "flags" : {
+                "comment" : "",
+                "rating" : ""
+            },
+            "name" : text[1:10],
+            "public" : 1,
+            "token" : "",
+            "image" : "https://pbs.twimg.com/profile_images/536913427789144064/yCWYL_7W_400x400.jpeg",
+            "media" : "",
+            "views" : random.randint(1,10000),
+            "users" : {
+                "owner" : "5889b49cfc0e722b749e7026",
+                "members" : "5889b3f4fc0e7225f4605928"
+            },
+            "trending" : rand_100,
+            "rating" : {
+                "quality_score" : rand_100,
+                "opinion_score" : rand_100,
+                "relevance_score" : rand_100,
+                "opinion_votes" : rand_100,
+                "quality_votes" : rand_100,
+                "relevance_votes" : rand_100,
+                
+            }
+    }
 
-    result = PostService.InsertData(dict1)
+    PostService.InsertData(node, data)
 
-    #Fetches time and subtracts it with time at start
-    elapsed_time = time.monotonic() - start_time
-    print("API PostController process took:", elapsed_time, "sec")
-
-    return HttpResponse(result)
+    return HttpResponse(1)
