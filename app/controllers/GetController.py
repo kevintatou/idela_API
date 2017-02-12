@@ -5,6 +5,7 @@ from app.services.conn import *
 from app.services import GetService, ValidateService
 import time
 
+
 #Calls GetService to get one user in the user collection by its ObjectId
 def GetById(request, collection, id):
     return HttpResponse(dumps(GetService.GetById(eval(collection), id)))

@@ -6,7 +6,13 @@
 6. pip install django-cors-headers
 7. pip install faker
 7. cd idela_API
-8. py manage.py runserver
+
+##8. For Windows Users:
+windows.bat
+
+##9. For Linux Users
+./linux.sh
+
 9. Go to localhost:8000/
 
 ##API Docs
