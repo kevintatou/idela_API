@@ -13,7 +13,7 @@ windows.bat
 ##9. For Linux Users
 ./linux.sh
 
-9. Go to localhost:8000/
+##10. Go to localhost:8000/
 
 ##API Docs
 ### Get Requests
