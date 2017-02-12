@@ -4,6 +4,7 @@
 4. git clone https://github.com/kevintatou/idela_API.git
 5. pip install pymongo
 6. pip install django-cors-headers
+7. pip install faker
 7. cd idela_API
 8. py manage.py runserver
 9. Go to localhost:8000/
