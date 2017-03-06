@@ -33,7 +33,7 @@ def SettingsHandler(settings_req):
     #db_collection_softdelete = {}
     #db_collection_feedback = {}
 
-    #Checks what was requested and returns request variable
+    #Checks what was requested and returns requested variable
     if settings_req == 'allowed_terms':
         return allowed_terms
     elif settings_req == 'db_collections':

@@ -6,7 +6,6 @@ from app.services import GetService, ValidateService
 import time
 
 def Get(request, catch_all):
-
     #Fetches time
     start_time = time.monotonic()
 
@@ -19,8 +18,9 @@ def Get(request, catch_all):
     #Makes a get request
     result = GetService.GetRequest(dict1)
 
-    #Fetches time and subtracts it with time at start
+    #Fetches time and subtracts it with start_time
     elapsed_time = time.monotonic() - start_time
+    #Prints how long the process took
     print("API GetController process took:", elapsed_time, "sec")
 
     return HttpResponse(dumps(result))
