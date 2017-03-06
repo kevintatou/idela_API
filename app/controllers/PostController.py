@@ -9,8 +9,13 @@ fake = Faker()
 
 # Post User data
 def Post(request):
-
-    #
+    ########### Tasks ###########
+    #Authenticate user
+    #Check if collection is valid
+    #Check if the minimum requirements in the request are met
+    #Structure the request for MongoDB
+    #Add to related collection - if needed
+    #Post to DB
 
 
     date = datetime.datetime.utcnow()
