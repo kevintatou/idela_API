@@ -9,6 +9,10 @@ fake = Faker()
 
 # Post User data
 def Post(request):
+
+    #
+
+
     date = datetime.datetime.utcnow()
 
 
