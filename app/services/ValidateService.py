@@ -42,3 +42,12 @@ def ValidateGetTerms(dict1):
                         result['attribute'] = attribute
 
     return result
+
+#Validate nodes
+def ValidatePostNodes(dict):
+    result = {}
+
+    db_collection_node = SettingsService.SettingsHandler('db_collection_node')
+    print(db_collection_node)
+    
+    return result

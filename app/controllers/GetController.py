@@ -5,17 +5,7 @@ from app.services.conn import *
 from app.services import GetService, ValidateService
 import time
 
-
-#Calls GetService to get one user in the user collection by its ObjectId
-def GetById(request, collection, id):
-    return HttpResponse(dumps(GetService.GetById(eval(collection), id)))
-    #return HttpResponse("ok")
-#Calls GetService to get all users
-def GetAll(request, collection):
-    return HttpResponse(dumps(GetService.GetAll(eval(collection))))
-
 def Get(request, catch_all):
-
     #Fetches time
     start_time = time.monotonic()
 
@@ -24,7 +14,6 @@ def Get(request, catch_all):
     
     #Validate for mongodb query use
     dict1 = ValidateService.ValidateGetTerms(catch_all)
-
 
     #Makes a get request
     result = GetService.GetRequest(dict1)
