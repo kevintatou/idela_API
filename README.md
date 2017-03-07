@@ -4,29 +4,28 @@
 4. git clone https://github.com/kevintatou/idela_API.git
 5. pip install pymongo
 6. pip install django-cors-headers
-7. pip install faker
 7. cd idela_API
 
 ##8. For Windows Users:
 windows.bat
 
-##9. For Linux Users
+##8. For Linux Users
 bash linux.sh
 
-### 10. Go to localhost:8000/
+9. Go to localhost:8000/
 
 ##API Docs
 ### Get Requests
 #### Get Requests - Bare-bones
-/get/`term`=`value` 
+/get/`key`=`value` 
 ```
-Gets everythings where `term`=`value`.
+Gets everythings where `key`=`value`.
 ```
-/get/`term1`=`value1`&`term2`=`value2`
+/get/`key1`=`value1`&`key2`=`value2`
 ```
-Gets everythings where `term`=`value` and `term2`=`value2`.
+Gets everythings where `key`=`value` and `key2`=`value2`.
 ```
-#### Get Requests - Allowed Terms
+#### Get Requests - Allowed keys
 'alias',
 'col',
 'date',
@@ -51,8 +50,24 @@ Gets all documents from 'collection' named 'node' in the database
 where field name is 'name' and has the value of 'liam'.
 ```
 ***Note: Unlimited amount of filters allowed, but do NOT duplicate terms***
+
 ### Post Requests
+#### Post Requests - Bare-bones
 /post
 ```
-Hard coded data 
+Post form data with a `key` and `value` 
 ```
+#### Post Requests - Users Minimum Requirements
+'firstname',
+'lastname',
+'email',
+'tokens'
+#### Post Requests - Nodes Minimum Requirements
+'tags',
+'name',
+'public',
+'owner'
+#### Post Requests - Tagss Minimum Requirements
+'name'
+#### Get Requests - Example
+//ADD HTML FORM//

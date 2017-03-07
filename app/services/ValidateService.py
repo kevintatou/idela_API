@@ -2,8 +2,8 @@ from app.services import SettingsService
 from bson import ObjectId
 
 #Validates a dictionary for mongodb query use
-#Recieves dictionary in a normal format
-#Returns a dictionary with dictionaries inside
+#IN: Simple dict
+#OUT: A structured dict for MongoDB GET
 def ValidateGetKeys(request):
     #Defining variables
     attribute = {}
@@ -15,7 +15,7 @@ def ValidateGetKeys(request):
     #Query to find multiple objects by ObjectIds
     #collection.find({"_id":{ "$in": [id, id]}})
 
-    #Checks if items are valid
+    #Checks if keys are valid
     for key in allowed_keys:
         for request_key in request:
             if request_key == key:
@@ -43,8 +43,10 @@ def ValidateGetKeys(request):
 
     return result
 
-#Checks if the request mets the minimum requirements
-def ValidateMinReq(request):
+#Checks if the request meets the minimum requirements
+#IN: Form data object
+#OUT: Bool
+def ValidateMinRequire(request):
     #Finds collection in request and gets the relevant minimum requirements for that collection
     #if no collection was found return False
     if request.POST.get('col') == 'node':
@@ -56,36 +58,39 @@ def ValidateMinReq(request):
     else:
         return False
 
-    #Loops through request and removes keys from min_node_req if they exist in request 
+    #Loops through the request and removes keys from min_requirement if they exist in request 
     for post_key, post_value in request.POST.lists():
         for req_key in min_requirement:
             if post_key == req_key:
                 min_requirement.remove(req_key)
 
-    #Checks if minimum requirements are met
+    #Checks if the minimum requirements are met: Met if min_requirement is empty
     if not min_requirement:
         return True
     else:
         return False
 
+#Turns the form request data into a dict for MongoDB use
+#IN: Form data object
+#OUT: A structured dict for MongoDB POST
 def ValidateFormatPost(request):
     result = {}
 
     #Finds collection in request and gets relevant collection structure
     #if no collection was found return False
     if request.POST.get('col') == 'node':
-        db_collection_structure = SettingsService.SettingsHandler('db_collection_node')
+        db_col_structure = SettingsService.SettingsHandler('db_collection_node')
     elif request.POST.get('col') == 'user':
-        db_collection_structure = SettingsService.SettingsHandler('db_collection_user')
+        db_col_structure = SettingsService.SettingsHandler('db_collection_user')
     elif request.POST.get('col') == 'tags':
-        db_collection_structure = SettingsService.SettingsHandler('db_collection_tags')
+        db_col_structure = SettingsService.SettingsHandler('db_collection_tags')
     else:
         return False
     
 
     for post_key, post_value in request.POST.lists():
-        if db_collection_structure[post_key]:
-            print(db_collection_structure[post_key])
+        if db_col_structure[post_key]:
+            print(db_col_structure[post_key])
 
         #for col_key in db_collection_structure:
             #break
