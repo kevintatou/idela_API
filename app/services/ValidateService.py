@@ -17,6 +17,7 @@ def ValidateGetKeys(request):
 
     #Checks if keys are valid
     for key in allowed_keys:
+        #if key in dict
         for request_key in request:
             if request_key == key:
                 #Changes values in request to int if allowed_keys says it is
@@ -86,14 +87,20 @@ def ValidateFormatPost(request):
         db_col_structure = SettingsService.SettingsHandler('db_collection_tags')
     else:
         return False
-    
+
+    #db_col_structure['name'] = request.POST.get('name')
 
     for post_key, post_value in request.POST.lists():
-        if db_col_structure[post_key]:
-            print(db_col_structure[post_key])
-
-        #for col_key in db_collection_structure:
-            #break
-
-
+        if post_key in db_col_structure:
+            if db_col_structure[post_key] == str:
+                db_col_structure[post_key] = str(post_value[0])
+            elif db_col_structure[post_key] == int:
+                db_col_structure[post_key] = int(post_value[0])
+            elif type(db_col_structure[post_key]) is list:
+                post_value = post_value[0].split(" ")
+                db_col_structure[post_key] = list(post_value)
+                print(db_col_structure[post_key])
+        elif post_key in db_col_structure['users']:
+            db_col_structure['users'][post_key] = post_value
+            
     return result

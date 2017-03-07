@@ -2,7 +2,7 @@
 def SettingsHandler(settings_req):
     #Allowed terms to be used for MongoDB use
     if settings_req == "allowed_keys":
-        return allowed_keys = {
+        return {
             'col': str, 
             'name': str, 
             'id': str, 
@@ -20,7 +20,7 @@ def SettingsHandler(settings_req):
         }
     #MongoDB collections
     elif settings_req == "db_collections":
-        return db_collections = [
+        return [
             'user',
             'node',
             'tag',
@@ -29,7 +29,7 @@ def SettingsHandler(settings_req):
         ]
     #Minimum requirements for Node creation
     elif settings_req == "min_node_req":
-        return min_node_req = [
+        return [
             'tags',
             'name',
             'public',
@@ -37,7 +37,7 @@ def SettingsHandler(settings_req):
         ]
     #Minimum requirements for User creation
     elif settings_req == "min_user_req":
-        return min_user_req = [
+        return [
             'firstname',
             'lastname',
             'email',
@@ -45,12 +45,12 @@ def SettingsHandler(settings_req):
         ]
     #Minimum requirements for Tag creation
     elif settings_req == "min_tag_req":
-        return min_tag_req = [
+        return  [
             'name'
         ]
     #MongoDB structure for Node collection
     elif settings_req == "db_collection_node":
-        return db_collection_node = {
+        return {
             "date": int,
             "weekly": int,
             "tags": [
