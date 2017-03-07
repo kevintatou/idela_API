@@ -8,9 +8,18 @@ from app.services import PostService, ValidateService
 from bson.json_util import dumps
 
 # Post User data
+
 def Post(request, collection):
-    #To do - Add auth 
+    ########### Tasks ###########
+    #Authenticate user
+    #Check if collection is valid
+    #Check if the minimum requirements in the request are met
+    #Structure the request for MongoDB
+    #Add to related collection - if needed
+    #Post to DB
     print(collection)
+    
+
 
     date = datetime.datetime.utcnow()
 

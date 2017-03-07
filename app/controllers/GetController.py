@@ -18,8 +18,9 @@ def Get(request, catch_all):
     #Makes a get request
     result = GetService.GetRequest(dict1)
 
-    #Fetches time and subtracts it with time at start
+    #Fetches time and subtracts it with start_time
     elapsed_time = time.monotonic() - start_time
+    #Prints how long the process took
     print("API GetController process took:", elapsed_time, "sec")
 
     return HttpResponse(dumps(result))

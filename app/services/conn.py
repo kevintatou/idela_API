@@ -1,8 +1,7 @@
 from pymongo import MongoClient
 
-
-
 client = MongoClient('localhost', 4321)
+
 #print(client.test.command('buildinfo'))
 
 #Get idela database
