@@ -5,11 +5,9 @@
 4. pip install pymongo
 5. pip install django-cors-headers
 6. cd idela_API
-
 7. Run server
-  *For Windows Users: windows.bat
-  *For Linux Users: bash linux.sh
-
+  * For Windows Users: windows.bat
+  * For Linux Users: bash linux.sh
 8. Go to localhost:8000/
 
 ##API Docs
