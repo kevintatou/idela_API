@@ -1,18 +1,16 @@
 ##Setup
 1. Install Python v3.5.2
-3. Install Django v1.10.4
-4. git clone https://github.com/kevintatou/idela_API.git
-5. pip install pymongo
-6. pip install django-cors-headers
-7. cd idela_API
+2. Install Django v1.10.4
+3. git clone https://github.com/kevintatou/idela_API.git
+4. pip install pymongo
+5. pip install django-cors-headers
+6. cd idela_API
 
-8. For Windows Users:
-windows.bat
+7. Run server
+  *For Windows Users: windows.bat
+  *For Linux Users: bash linux.sh
 
-8. For Linux Users
-bash linux.sh
-
-9. Go to localhost:8000/
+8. Go to localhost:8000/
 
 ##API Docs
 ### Get Requests
