@@ -3,7 +3,7 @@ from bson import ObjectId
 
 #Validates a dictionary for mongodb query use
 #IN: Simple dict
-#OUT: A structured dict for MongoDB GET
+#OUT: A structured dict for MongoDB GET usage
 def ValidateGetKeys(request):
     #Defining variables
     attribute = {}
@@ -72,7 +72,7 @@ def ValidateMinRequire(request):
 
 #Turns the form request data into a dict for MongoDB use
 #IN: Form data object
-#OUT: A structured dict for MongoDB POST
+#OUT: A structured dict for MongoDB POST usage
 def ValidateFormatPost(request):
     result = {}
 
