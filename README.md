@@ -6,10 +6,10 @@
 6. pip install django-cors-headers
 7. cd idela_API
 
-##8. For Windows Users:
+8. For Windows Users:
 windows.bat
 
-##8. For Linux Users
+8. For Linux Users
 bash linux.sh
 
 9. Go to localhost:8000/
@@ -67,7 +67,7 @@ Post form data with a `key` and `value`
 'name',
 'public',
 'owner'
-#### Post Requests - Tagss Minimum Requirements
+#### Post Requests - Tags Minimum Requirements
 'name'
 #### Get Requests - Example
 //ADD HTML FORM//
