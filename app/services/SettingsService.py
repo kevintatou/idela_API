@@ -1,7 +1,7 @@
 #Overall useful variables
 def SettingsHandler(settings_req):
     #Allowed terms to be used for MongoDB use
-    allowed_terms = {
+    allowed_keys = {
         'col': str, 
         'name': str, 
         'id': str, 
@@ -25,6 +25,14 @@ def SettingsHandler(settings_req):
         'tag',
         'softdelete',
         'feedback'
+    ]
+
+    #Minimum requirements for node creation
+    min_node_req = [
+        'tags',
+        'name',
+        'public',
+        'owner'
     ]
 
     #MongoDB structure for Node collection
@@ -65,9 +73,11 @@ def SettingsHandler(settings_req):
     #db_collection_feedback = {}
 
     #Checks what was requested and returns requested variable
-    if settings_req == 'allowed_terms':
-        return allowed_terms
+    if settings_req == 'allowed_keys':
+        return allowed_keys
     elif settings_req == 'db_collections':
         return db_collections
     elif settings_req == 'db_collection_node':
         return db_collection_node
+    elif settings_req == 'min_node_req':
+        return min_node_req

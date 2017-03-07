@@ -1,26 +1,27 @@
 from django.shortcuts import HttpResponse
 from app.services.conn import *
-import datetime
+
 #Defining services
 from app.services import PostService, ValidateService
 
 #For testing
 from bson.json_util import dumps
+import datetime
 
 # Post User data
-
-def Post(request, collection):
-    ########### Tasks ###########
+def Post(request):
+    ########### Tasks - To Do ###########
     #Authenticate user
-    #Check if collection is valid
-    #Check if the minimum requirements in the request are met
-    #Structure the request for MongoDB
     #Add to related collection - if needed
     #Post to DB
-    print(collection)
-    
 
+    #Check minimum requirements
+    if ValidateService.ValidateMinReq(request):
 
+        #Structure the request for MongoDB
+        request = ValidateService.ValidateFormatPost(request)
+
+    '''
     date = datetime.datetime.utcnow()
 
     data = {
@@ -56,9 +57,7 @@ def Post(request, collection):
             "relevance_votes" : 1,
         }
     }
-
-    ValidateService.ValidatePostNodes("test")
-
+    '''
+    #ValidateService.ValidatePostNodes("test")
     return HttpResponse(request)
-    #return HttpResponse(PostService.InsertData(node, data))
     

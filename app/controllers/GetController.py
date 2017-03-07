@@ -9,11 +9,11 @@ def Get(request, catch_all):
     #Fetches time
     start_time = time.monotonic()
 
-    #Catches URL and converts terms and values into a dict
-    catch_all = dict(term.split("=") for term in catch_all.split("&"))
+    #Catches URL and converts keys and values into a dict
+    catch_all = dict(key.split("=") for key in catch_all.split("&"))
     
     #Validate for mongodb query use
-    dict1 = ValidateService.ValidateGetTerms(catch_all)
+    dict1 = ValidateService.ValidateGetKeys(catch_all)
 
     #Makes a get request
     result = GetService.GetRequest(dict1)

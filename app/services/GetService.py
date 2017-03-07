@@ -9,14 +9,15 @@ def GetRequest(req_values):
     select = None
     collection = None
     attribute = None
+
     #Check for existing keys and adds those values into a variable
-    for item in req_values:
-        if item == 'select':
+    for key in req_values:
+        if key == 'select':
             select = req_values['select'][0]
-        elif item == 'collection':
+        elif key == 'collection':
             #Using eval to convert str to 'python code'
             collection = eval(req_values['collection'][0])
-        elif item == 'attribute':
+        elif key == 'attribute':
             attribute = req_values['attribute']
     
     if select != None:

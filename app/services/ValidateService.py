@@ -4,50 +4,91 @@ from bson import ObjectId
 #Validates a dictionary for mongodb query use
 #Recieves dictionary in a normal format
 #Returns a dictionary with dictionaries inside
-def ValidateGetTerms(dict1):
+def ValidateGetKeys(request):
     #Defining variables
     attribute = {}
     result = {}
     
-    allowed_terms = SettingsService.SettingsHandler('allowed_terms')
+    allowed_keys = SettingsService.SettingsHandler('allowed_keys')
     db_collections = SettingsService.SettingsHandler('db_collections')
 
     #Query to find multiple objects by ObjectIds
     #collection.find({"_id":{ "$in": [id, id]}})
 
     #Checks if items are valid
-    for term in allowed_terms:
-        for dict1_item in dict1:
-            if dict1_item == term:
-                #Changes values in dict1 to int if allowed_terms says it is
-                if allowed_terms.get(term) == int:
-                    attribute[dict1_item] = int(dict1.get(dict1_item))
+    for key in allowed_keys:
+        for request_key in request:
+            if request_key == key:
+                #Changes values in request to int if allowed_keys says it is
+                if allowed_keys.get(key) == int:
+                    attribute[request_key] = int(request.get(request_key))
                     result['attribute'] = attribute
                 else:
                     #Changes id key and value to proper attributes for mongodb use
-                    if dict1_item == 'id':
-                        attribute['_id'] = ObjectId(dict1.get(dict1_item))
+                    if request_key == 'id':
+                        attribute['_id'] = ObjectId(request.get(request_key))
                         result['attribute'] = attribute
                     #Changes col key and puts value in it 
-                    elif dict1_item == 'col':
+                    elif request_key == 'col':
                         for collection in db_collections:
                             #Checks if collection is valid by comparison to db_collections
-                            if collection == dict1.get(dict1_item):
-                                result['collection'] = [dict1.get(dict1_item)]
+                            if collection == request.get(request_key):
+                                result['collection'] = [request.get(request_key)]
                     #Puts value in select key
-                    elif dict1_item == 'select':
-                        result['select'] = [dict1.get(dict1_item)]
+                    elif request_key == 'select':
+                        result['select'] = [request.get(request_key)]
                     else:
-                        attribute[dict1_item] = dict1.get(dict1_item)
+                        attribute[request_key] = request.get(request_key)
                         result['attribute'] = attribute
 
     return result
 
-#Validate nodes
-def ValidatePostNodes(dict):
+#Checks if the request mets the minimum requirements
+def ValidateMinReq(request):
+    #Finds collection in request and gets the relevant minimum requirements for that collection
+    #if no collection was found return False
+    if request.POST.get('col') == 'node':
+        min_requirement = SettingsService.SettingsHandler('min_node_req')
+    elif request.POST.get('col') == 'user':
+        min_requirement = SettingsService.SettingsHandler('min_user_req')
+    elif request.POST.get('col') == 'tags':
+        min_requirement = SettingsService.SettingsHandler('min_tags_req')
+    else:
+        return False
+
+    #Loops through request and removes keys from min_node_req if they exist in request 
+    for post_key, post_value in request.POST.lists():
+        for req_key in min_requirement:
+            if post_key == req_key:
+                min_requirement.remove(req_key)
+
+    #Checks if minimum requirements are met
+    if not min_requirement:
+        return True
+    else:
+        return False
+
+def ValidateFormatPost(request):
     result = {}
 
-    db_collection_node = SettingsService.SettingsHandler('db_collection_node')
-    print(db_collection_node)
+    #Finds collection in request and gets relevant collection structure
+    #if no collection was found return False
+    if request.POST.get('col') == 'node':
+        db_collection_structure = SettingsService.SettingsHandler('db_collection_node')
+    elif request.POST.get('col') == 'user':
+        db_collection_structure = SettingsService.SettingsHandler('db_collection_user')
+    elif request.POST.get('col') == 'tags':
+        db_collection_structure = SettingsService.SettingsHandler('db_collection_tags')
+    else:
+        return False
     
+
+    for post_key, post_value in request.POST.lists():
+        if db_collection_structure[post_key]:
+            print(db_collection_structure[post_key])
+
+        #for col_key in db_collection_structure:
+            #break
+
+
     return result
