@@ -11,7 +11,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'p3ru$#0q=37x2)tc+41%mid6dcycb_6f*a8zfy_%^f3-doraz3'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -24,7 +24,9 @@ CORS_ORIGIN_WHITELIST = (
     '127.0.0.1:3000',
     '193.11.185.226:2000',
     '193.11.184.145:3000',
-    '127.0.0.1:8080'
+    '127.0.0.1:8080',
+    '207.154.211.98',
+    'http://www.idela.se'
 )
 
 # Application definition
