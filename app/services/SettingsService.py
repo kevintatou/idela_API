@@ -59,7 +59,7 @@ def SettingsHandler(settings_req):
             "desc": str,
             "flags": {
                 "comment": str,
-                "rating": str
+                "rating": str,
             },
             "name": str,
             "public": int,
@@ -67,14 +67,14 @@ def SettingsHandler(settings_req):
             "image": str,
             "media": str,
             "views": int,
-            "users": {
+            "user": {
                 "owner": str,
                 "members": [
                     str
-                ]
+                ],
             },
             "trending": int,
-            "rating": {
+            "rating" : {
                 "quality_score": int,
                 "opinion_score": int,
                 "relevance_score": int,
@@ -82,6 +82,14 @@ def SettingsHandler(settings_req):
                 "quality_votes": int,
                 "relevance_votes": int
             }
+        }
+    elif settings_req == "db_collection_user":
+        return {
+
+        }
+    elif settings_req == "db_collection_tag":
+        return {
+
         }
     #settings_req didnt meet any of the listed variables
     else:

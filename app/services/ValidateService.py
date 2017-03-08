@@ -1,5 +1,6 @@
 from app.services import SettingsService
 from bson import ObjectId
+import datetime
 
 #Validates a dictionary for mongodb query use
 #IN: Simple dict
@@ -45,25 +46,24 @@ def ValidateGetKeys(request):
     return result
 
 #Checks if the request meets the minimum requirements
-#IN: Form data object
+#IN: Simple dictionary
 #OUT: Bool
 def ValidateMinRequire(request):
     #Finds collection in request and gets the relevant minimum requirements for that collection
     #if no collection was found return False
-    if request.POST.get('col') == 'node':
+    if request['col'] == 'node':
         min_requirement = SettingsService.SettingsHandler('min_node_req')
-    elif request.POST.get('col') == 'user':
+    elif request['col'] == 'user':
         min_requirement = SettingsService.SettingsHandler('min_user_req')
-    elif request.POST.get('col') == 'tags':
+    elif request['col'] == 'tags':
         min_requirement = SettingsService.SettingsHandler('min_tags_req')
     else:
         return False
 
     #Loops through the request and removes keys from min_requirement if they exist in request 
-    for post_key, post_value in request.POST.lists():
-        for req_key in min_requirement:
-            if post_key == req_key:
-                min_requirement.remove(req_key)
+    for post_key in request:
+        if post_key in min_requirement:
+            min_requirement.remove(post_key)
 
     #Checks if the minimum requirements are met: Met if min_requirement is empty
     if not min_requirement:
@@ -72,35 +72,64 @@ def ValidateMinRequire(request):
         return False
 
 #Turns the form request data into a dict for MongoDB use
-#IN: Form data object
-#OUT: A structured dict for MongoDB POST usage
+#IN: Simple dictionary
+#OUT: A structured dict for MongoDB POST use
 def ValidateFormatPost(request):
     result = {}
 
     #Finds collection in request and gets relevant collection structure
     #if no collection was found return False
-    if request.POST.get('col') == 'node':
+    if request['col'] == 'node':
         db_col_structure = SettingsService.SettingsHandler('db_collection_node')
-    elif request.POST.get('col') == 'user':
-        db_col_structure = SettingsService.SettingsHandler('db_collection_user')
-    elif request.POST.get('col') == 'tags':
-        db_col_structure = SettingsService.SettingsHandler('db_collection_tags')
+    elif request['col'] == 'user':
+        db_col_structure = SettingsService.SettingsHandler('user_post_keys_allowed')
+    elif request['col'] == 'tags':
+        db_col_structure = SettingsService.SettingsHandler('tag_post_keys_allowed')
     else:
         return False
-
-    #db_col_structure['name'] = request.POST.get('name')
-
-    for post_key, post_value in request.POST.lists():
+    '''
+    for post_key in request:
         if post_key in db_col_structure:
-            if db_col_structure[post_key] == str:
-                db_col_structure[post_key] = str(post_value[0])
-            elif db_col_structure[post_key] == int:
-                db_col_structure[post_key] = int(post_value[0])
-            elif type(db_col_structure[post_key]) is list:
-                post_value = post_value[0].split(" ")
-                db_col_structure[post_key] = list(post_value)
-                print(db_col_structure[post_key])
-        elif post_key in db_col_structure['users']:
-            db_col_structure['users'][post_key] = post_value
-            
+            print(post_key)
+        elif post_key in db_col_structure['user']:
+            print(post_key)
+        elif post_key in db_col_structure['rating']:
+            print(post_key)
+        elif post_key in db_col_structure['flags']:
+            print(post_key)
+    '''
+
+    for col_key in db_col_structure:
+        if type(db_col_structure[col_key]) is dict:
+            for request_key in request:
+                print(col_key)
+                print(request_key)
+                if col_key == request_key:
+                    print(col_key)
+
+
+
+
+    '''
+    #Checks for valid keys and adds those values to result dict
+    for post_key in request:
+        if post_key in allowed_keys:
+            if allowed_keys[post_key] == str:
+                if post_key == 'tags':
+                    result[post_key] = str(request[post_key].split(" "))
+                elif post_key == 'owner':
+                    result['owner'] = request[post_key]
+                elif post_key == 'members':
+                    result['member'] = request[post_key].split(" ")
+                else:
+                    result[post_key] = str(request[post_key])
+            if allowed_keys[post_key] == int:
+                result[post_key] = int(request[post_key])
+    '''
+    #Time stamp
+    result['date'] = datetime.datetime.utcnow()
+    
+    #print(result)
+    
     return result
+    
