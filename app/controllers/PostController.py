@@ -23,7 +23,6 @@ def Post(request):
     #Check minimum requirements
     
     if ValidateService.ValidateMinRequire(request, db_col):
-        print("hello")
         #Structure the request for MongoDB
         formated_request = ValidateService.ValidateFormatPost(request, db_col)
         
