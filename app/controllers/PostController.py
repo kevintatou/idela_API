@@ -1,51 +1,39 @@
 from django.shortcuts import HttpResponse
+from django.http import JsonResponse
 from app.services.conn import *
+import json
 #Defining services
-from app.services import PostService
+from app.services import PostService, ValidateService
+import time
+
+
+#For testing
 import datetime
-import random
-from faker import Faker
-fake = Faker()
 
 # Post User data
 def Post(request):
-    date = datetime.datetime.utcnow()
+    #Fetches time
+    start_time = time.monotonic()
+    
+    ########### Tasks - To Do ###########
+    #Authenticate user
+    #Add to related collection - if needed
+    #Post to DB
 
+    #Decodes json and unlists it
+    request = json.loads(request.body.decode("utf-8"))[0]
 
-    data = {
-            "date" : date,
-            "weekly" : random.randint(1,100),
-            "tags" : [ 
-                'koda',
-                'facebook',
-                'live'
-            ],
-            "desc" : "Följ Liam i hans maniska kodsession live via Facebook's API",
-            "flags" : {
-                "comment" : "",
-                "rating" : ""
-            },
-            "name" : 'Liam kodar',
-            "public" : 1,
-            "token" : "",
-            "image" : "http://www.annatroberg.se/wp-content/uploads/2014/02/iStock_000016095582Small-1508x706_c.jpg",
-            "media" : "",
-            "views" : random.randint(1,10000),
-            "users" : {
-                "owner" : "5889b49cfc0e722b749e7026",
-                "members" : "5889b3f4fc0e7225f4605928"
-            },
-            "trending" : random.randint(1,100),
-            "rating" : {
-                "quality_score" : random.randint(1,100),
-                "opinion_score" : random.randint(1,100),
-                "relevance_score" : random.randint(1,100),
-                "opinion_votes" : random.randint(1,100),
-                "quality_votes" : random.randint(1,100),
-                "relevance_votes" : random.randint(1,100),
-            }
-    }
+    #Check minimum requirements
+    if ValidateService.ValidateMinRequire(request):
+        #Structure the request for MongoDB
+        formated_request = ValidateService.ValidateFormatPost(request)
+        
+        PostService.PostRequest(formated_request)
 
+    #Fetches time and subtracts it with start_time
+    elapsed_time = time.monotonic() - start_time
+    #Prints how long the process took
+    print("API PostController process took:", elapsed_time, "sec")
 
-    return HttpResponse(PostService.InsertData(node, data))
+    return HttpResponse("None")
     

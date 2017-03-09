@@ -104,3 +104,6 @@ app/services/__pycache__/
 idela/__pycache__/
 
 linux.sh
+windows.bat
+
+.vscode/
