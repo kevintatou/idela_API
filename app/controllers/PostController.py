@@ -26,12 +26,14 @@ def Post(request):
     #Check minimum requirements
     if ValidateService.ValidateMinRequire(request):
         #Structure the request for MongoDB
-        request = ValidateService.ValidateFormatPost(request)
+        formated_request = ValidateService.ValidateFormatPost(request)
+        
+        PostService.PostRequest(formated_request)
 
     #Fetches time and subtracts it with start_time
     elapsed_time = time.monotonic() - start_time
     #Prints how long the process took
     print("API PostController process took:", elapsed_time, "sec")
 
-    return HttpResponse(request)
+    return HttpResponse("None")
     

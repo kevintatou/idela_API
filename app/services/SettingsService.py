@@ -51,36 +51,36 @@ def SettingsHandler(settings_req):
     #MongoDB structure for Node collection
     elif settings_req == "db_collection_node":
         return {
-            "date": int,
-            "weekly": int,
+            "date": 0,
+            "weekly": 0,
             "tags": [
-                str
+                ''
             ],
-            "desc": str,
+            "desc": '',
             "flags": {
-                "comment": str,
-                "rating": str,
+                "comment": '',
+                "rating": '',
             },
-            "name": str,
-            "public": int,
-            "token": str,
-            "image": str,
-            "media": str,
-            "views": int,
+            "name": '',
+            "public": 0,
+            "token": '',
+            "image": '',
+            "media": '',
+            "views": 0,
             "user": {
-                "owner": str,
+                "owner": '',
                 "members": [
-                    str
+                    ''
                 ],
             },
-            "trending": int,
+            "trending": 0,
             "rating" : {
-                "quality_score": int,
-                "opinion_score": int,
-                "relevance_score": int,
-                "opinion_votes": int,
-                "quality_votes": int,
-                "relevance_votes": int
+                "quality_score": 0,
+                "opinion_score": 0,
+                "relevance_score": 0,
+                "opinion_votes": 0,
+                "quality_votes": 0,
+                "relevance_votes": 0
             }
         }
     elif settings_req == "db_collection_user":
