@@ -44,14 +44,15 @@ def SettingsHandler(settings_req):
             'tokens'
         ]
     #Minimum requirements for Tag creation
-    elif settings_req == "min_tag_req":
+    elif settings_req == "min_tags_req":
         return  [
             'name'
         ]
     #MongoDB structure for Node collection
     elif settings_req == "db_collection_node":
         return {
-            "date": 0,
+            "created_on": 0,
+            "updated_on": 0,
             "weekly": 0,
             "tags": [
                 ''
@@ -85,11 +86,32 @@ def SettingsHandler(settings_req):
         }
     elif settings_req == "db_collection_user":
         return {
-
+            "alias": "",
+            "firstname": "",
+            "lastname": "",
+            "email": "",
+            "desc": "",
+            "nodes": [
+                ""
+            ],
+            "image": "",
+            "views": 0,
+            "weekly": 0,
+            "trending": 0,
+            "flags": {
+                "level": 0,
+                "comment": ""
+            },
+            "created_on": 0,
+            "updated_on": 0
         }
-    elif settings_req == "db_collection_tag":
+    elif settings_req == "db_collection_tags":
         return {
-
+            "name": "",
+            "desc": "",
+            "nodes": [ 
+                ""
+            ]
         }
     #settings_req didnt meet any of the listed variables
     else:

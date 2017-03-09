@@ -6,10 +6,6 @@ import json
 from app.services import PostService, ValidateService
 import time
 
-
-#For testing
-import datetime
-
 # Post User data
 def Post(request):
     #Fetches time
@@ -18,22 +14,24 @@ def Post(request):
     ########### Tasks - To Do ###########
     #Authenticate user
     #Add to related collection - if needed
-    #Post to DB
 
     #Decodes json and unlists it
     request = json.loads(request.body.decode("utf-8"))[0]
 
+    #Puts collection in a variable
+    db_col = request['col']
     #Check minimum requirements
-    if ValidateService.ValidateMinRequire(request):
+    
+    if ValidateService.ValidateMinRequire(request, db_col):
+        print("hello")
         #Structure the request for MongoDB
-        formated_request = ValidateService.ValidateFormatPost(request)
+        formated_request = ValidateService.ValidateFormatPost(request, db_col)
         
-        PostService.PostRequest(formated_request)
-
-    #Fetches time and subtracts it with start_time
-    elapsed_time = time.monotonic() - start_time
-    #Prints how long the process took
-    print("API PostController process took:", elapsed_time, "sec")
+        #Posts to MongoDB
+        PostService.PostRequest(formated_request, db_col)
+    
+    #Prints process duration
+    print("API GetController process took:", time.monotonic() - start_time, "sec")
 
     return HttpResponse("None")
     

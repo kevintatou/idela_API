@@ -42,20 +42,19 @@ def ValidateGetKeys(request):
                     else:
                         attribute[request_key] = request.get(request_key)
                         result['attribute'] = attribute
-
     return result
 
 #Checks if the request meets the minimum requirements
-#IN: Simple dictionary
+#IN: Simple dictionary, collection
 #OUT: Bool
-def ValidateMinRequire(request):
+def ValidateMinRequire(request, col):
     #Finds collection in request and gets the relevant minimum requirements for that collection
     #if no collection was found return False
-    if request['col'] == 'node':
+    if col == 'node':
         min_requirement = SettingsService.SettingsHandler('min_node_req')
-    elif request['col'] == 'user':
+    elif col == 'user':
         min_requirement = SettingsService.SettingsHandler('min_user_req')
-    elif request['col'] == 'tags':
+    elif col == 'tags':
         min_requirement = SettingsService.SettingsHandler('min_tags_req')
     else:
         return False
@@ -72,18 +71,17 @@ def ValidateMinRequire(request):
         return False
 
 #Turns the form request data into a dict for MongoDB use
-#IN: Simple dictionary
+#IN: Simple dictionary, collection
 #OUT: A structured dict for MongoDB POST use
-def ValidateFormatPost(request):
-
+def ValidateFormatPost(request, col):
     #Finds collection in request and gets relevant collection structure
     #if no collection was found return False
-    if request['col'] == 'node':
+    if col == 'node':
         db_col_structure = SettingsService.SettingsHandler('db_collection_node')
-    elif request['col'] == 'user':
-        db_col_structure = SettingsService.SettingsHandler('user_post_keys_allowed')
-    elif request['col'] == 'tags':
-        db_col_structure = SettingsService.SettingsHandler('tag_post_keys_allowed')
+    elif col == 'user':
+        db_col_structure = SettingsService.SettingsHandler('db_collection_user')
+    elif col == 'tags':
+        db_col_structure = SettingsService.SettingsHandler('db_collection_tags')
     else:
         return False
 
@@ -95,7 +93,7 @@ def ValidateFormatPost(request):
                 #Loops through the request and adds values to the proper places
                 for request_key in request:
                     if nested_keys == request_key:
-                        if nested_keys == "members":
+                        if type(db_col_structure[col_key][nested_keys]) is list:
                             db_col_structure[col_key][nested_keys] = request[nested_keys].split(" ")
                         elif type(db_col_structure[col_key][nested_keys]) == str:
                             db_col_structure[col_key][nested_keys] = str(request[nested_keys])
@@ -112,7 +110,7 @@ def ValidateFormatPost(request):
                     db_col_structure[col_key] = request[col_key].split(" ")
 
     #Time stamp
-    db_col_structure['date'] = datetime.datetime.utcnow()
+    db_col_structure['created_on'] = datetime.datetime.utcnow()
 
     return db_col_structure
     
