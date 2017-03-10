@@ -10,6 +10,8 @@
   * For Linux Users: bash linux.sh
 8. Go to localhost:8000/
 
+***Note: Proper SSH key is required.***
+
 ##API Docs
 ### Get Requests
 #### Get Requests - Bare-bones
@@ -49,21 +51,99 @@ where field name is 'name' and has the value of 'liam'.
 
 ### Post Requests
 #### Post Requests - Bare-bones
+/post 
+```
+[
+    {
+        key: value,
+        key2: value2
+    }
+]
+```
+Posts a json object to /post with keys including values
+#### Post Requests - Minimum Requirements
+##### User
+```
+'col': 'user',
+'firstname': '',
+'lastname': '',
+'email': '',
+'tokens' ''
+```
+##### Nodes
+```
+'col': 'node',
+'tags': '',
+'name': '',
+'public': 0,
+'owner': ''
+```
+##### Tags
+```
+'col': 'tags',
+'name': ''
+```
+#### Post Requests - Allowed keys
+##### User
+```
+'col': 'user',
+'alias': '',
+'firstname': '',
+'lastname': '',
+'email': '',
+'desc': '',
+'tokens' '',
+'nodes': '',
+'image': '',
+'views': 0,
+'weekly': 0,
+'trending': 0,
+'level': 0,
+'comment': ''
+```
+##### Nodes
+```
+'col': 'node',
+'weekly': 0,
+'tags': '',
+'desc': '',
+'comment': '',
+'rating': '',
+'name': '',
+'public': 0,
+'token': '',
+'image': '',
+'media': '',
+'views': 0,
+'owner': '',
+'members': '',
+'trending': 0,
+'quality_score': 0,
+'opinion_score': 0,
+'relevance_score': 0,
+'opinion_votes': 0,
+'quality_votes': 0,
+'relevance_votes': 0
+```
+##### Tags
+```
+'col': 'tags'
+'name': '',
+'desc': '',
+'nodes': ''
+```
+#### Get Requests - Example
 /post
 ```
-Post form data with a `key` and `value` 
+[
+    {
+        'col': 'node',
+        'tags': 'github code',
+        'name': 'Bob the Coder',
+        'public': 1,
+        'owner': '0560940564',
+        'members': '095609507 04793912'
+    }
+]
 ```
-#### Post Requests - Users Minimum Requirements
-'firstname',
-'lastname',
-'email',
-'tokens'
-#### Post Requests - Nodes Minimum Requirements
-'tags',
-'name',
-'public',
-'owner'
-#### Post Requests - Tags Minimum Requirements
-'name'
-#### Get Requests - Example
-//ADD HTML FORM//
+Requests a json object to post. Request want to be put in node collection `'col': 'node'` in DB with keys containing a value `'name': 'Bob the Coder'`ect. The tags key `'tags': 'github code'` gets split by spaces into a array of strings `['github', 'code']`, meaning the node gets two tags not a single tag. The same goes with members key. Note that `owner` and `members` values are MongoDB ObjectID(s).
