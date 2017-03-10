@@ -20,9 +20,10 @@ def Post(request):
 
     #Puts collection in a variable
     db_col = request['col']
+
     #Check minimum requirements
-    
     if ValidateService.ValidateMinRequire(request, db_col):
+
         #Structure the request for MongoDB
         formated_request = ValidateService.ValidateFormatPost(request, db_col)
         

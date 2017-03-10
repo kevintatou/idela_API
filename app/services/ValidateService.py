@@ -19,29 +19,28 @@ def ValidateGetKeys(request):
     #Checks if keys are valid
     for key in allowed_keys:
         #if key in dict
-        for request_key in request:
-            if request_key == key:
-                #Changes values in request to int if allowed_keys says it is
-                if allowed_keys.get(key) == int:
-                    attribute[request_key] = int(request.get(request_key))
+        if key in request:
+            #Changes values in request to int if allowed_keys says it is
+            if allowed_keys.get(key) == int:
+                attribute[key] = int(request.get(key))
+                result['attribute'] = attribute
+            else:
+                #Changes id key and value to proper attributes for mongodb use
+                if key == 'id':
+                    attribute['_id'] = ObjectId(request.get(key))
                     result['attribute'] = attribute
+                #Changes col key and puts value in it 
+                elif key == 'col':
+                    for collection in db_collections:
+                        #Checks if collection is valid by comparison to db_collections
+                        if collection == request.get(key):
+                            result['collection'] = [request.get(key)]
+                #Puts value in select key
+                elif key == 'select':
+                    result['select'] = [request.get(key)]
                 else:
-                    #Changes id key and value to proper attributes for mongodb use
-                    if request_key == 'id':
-                        attribute['_id'] = ObjectId(request.get(request_key))
-                        result['attribute'] = attribute
-                    #Changes col key and puts value in it 
-                    elif request_key == 'col':
-                        for collection in db_collections:
-                            #Checks if collection is valid by comparison to db_collections
-                            if collection == request.get(request_key):
-                                result['collection'] = [request.get(request_key)]
-                    #Puts value in select key
-                    elif request_key == 'select':
-                        result['select'] = [request.get(request_key)]
-                    else:
-                        attribute[request_key] = request.get(request_key)
-                        result['attribute'] = attribute
+                    attribute[key] = request.get(key)
+                    result['attribute'] = attribute
     return result
 
 #Checks if the request meets the minimum requirements
@@ -91,14 +90,13 @@ def ValidateFormatPost(request, col):
             #Looks for the nested keys in the parent key
             for nested_keys in db_col_structure[col_key]:
                 #Loops through the request and adds values to the proper places
-                for request_key in request:
-                    if nested_keys == request_key:
-                        if type(db_col_structure[col_key][nested_keys]) is list:
-                            db_col_structure[col_key][nested_keys] = request[nested_keys].split(" ")
-                        elif type(db_col_structure[col_key][nested_keys]) == str:
-                            db_col_structure[col_key][nested_keys] = str(request[nested_keys])
-                        elif type(db_col_structure[col_key][nested_keys]) == int:
-                            db_col_structure[col_key][nested_keys] = int(request[nested_keys])
+                if nested_keys in request:
+                    if type(db_col_structure[col_key][nested_keys]) is list:
+                        db_col_structure[col_key][nested_keys] = request[nested_keys].split(" ")
+                    elif type(db_col_structure[col_key][nested_keys]) == str:
+                        db_col_structure[col_key][nested_keys] = str(request[nested_keys])
+                    elif type(db_col_structure[col_key][nested_keys]) == int:
+                        db_col_structure[col_key][nested_keys] = int(request[nested_keys])
         else:
             #Loops through the request and adds values to the proper places
             if col_key in request:
@@ -109,8 +107,12 @@ def ValidateFormatPost(request, col):
                 elif type(db_col_structure[col_key]) is list:
                     db_col_structure[col_key] = request[col_key].split(" ")
 
-    #Time stamp
+    #Timestamp
     db_col_structure['created_on'] = datetime.datetime.utcnow()
 
     return db_col_structure
     
+def ValidateExistInDB(request, col):
+    
+    #if db.mycollection.find({'UserIDS': { "$in": newID}}).count() > 0.
+    return request
