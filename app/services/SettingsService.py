@@ -44,52 +44,77 @@ def SettingsHandler(settings_req):
             'tokens'
         ]
     #Minimum requirements for Tag creation
-    elif settings_req == "min_tag_req":
+    elif settings_req == "min_tags_req":
         return  [
             'name'
         ]
     #MongoDB structure for Node collection
     elif settings_req == "db_collection_node":
         return {
-            "date": 0,
-            "weekly": 0,
-            "tags": [
+            'created_on': 0,
+            'updated_on': 0,
+            'weekly': 0,
+            'tags': [
                 ''
             ],
-            "desc": '',
-            "flags": {
-                "comment": '',
-                "rating": '',
+            'desc': '',
+            'flags': {
+                'comment': '',
+                'rating': '',
             },
-            "name": '',
-            "public": 0,
-            "token": '',
-            "image": '',
-            "media": '',
-            "views": 0,
-            "user": {
-                "owner": '',
-                "members": [
+            'name': '',
+            'public': 0,
+            'token': '',
+            'image': '',
+            'media': '',
+            'views': 0,
+            'user': {
+                'owner': '',
+                'members': [
                     ''
                 ],
             },
-            "trending": 0,
-            "rating" : {
-                "quality_score": 0,
-                "opinion_score": 0,
-                "relevance_score": 0,
-                "opinion_votes": 0,
-                "quality_votes": 0,
-                "relevance_votes": 0
+            'trending': 0,
+            'rating'' : {
+                'quality_score': 0,
+                'opinion_score': 0,
+                'relevance_score': 0,
+                'opinion_votes': 0,
+                'quality_votes': 0,
+                'relevance_votes': 0
             }
         }
     elif settings_req == "db_collection_user":
         return {
-
+            'alias': '',
+            'firstname': '',
+            'lastname': '',
+            'email': '',
+            'desc': '',
+            'tokens' '',
+            'nodes': [
+                ''
+            ],
+            'image': '',
+            'views': 0,
+            'weekly': 0,
+            'trending': 0,
+            'flags': {
+                'level': 0,
+                'comment': ''
+            },
+            'created_on': 0,
+            'updated_on': 0
         }
-    elif settings_req == "db_collection_tag":
+    elif settings_req == "db_collection_tags":
         return {
-
+            'name': '',
+            'desc': '',
+            'nodes': [ 
+                ''
+            ],
+            'created_on': 0,
+            'updated_on': 0
         }
     #settings_req didnt meet any of the listed variables
     else:
