@@ -3,12 +3,8 @@ from django.http import JsonResponse
 from app.services.conn import *
 import json
 #Defining services
-from app.services import PostService, ValidateService
+from app.services import PostService, ValidateService, SettingsService
 import time
-
-
-#For testing
-import datetime
 
 # Post User data
 def Post(request):
@@ -18,22 +14,40 @@ def Post(request):
     ########### Tasks - To Do ###########
     #Authenticate user
     #Add to related collection - if needed
-    #Post to DB
+
+    #Defining variables
+    result = str
 
     #Decodes json and unlists it
     request = json.loads(request.body.decode("utf-8"))[0]
 
+    db_col = request['col']
+
+    if db_col == 'node':
+        min_requirement = SettingsService.SettingsHandler('min_node_req')
+        db_col_structure = SettingsService.SettingsHandler('db_collection_node')
+    elif db_col == 'user':
+        min_requirement = SettingsService.SettingsHandler('min_user_req')
+        db_col_structure = SettingsService.SettingsHandler('db_collection_user')
+    elif db_col == 'tags':
+        min_requirement = SettingsService.SettingsHandler('min_tags_req')
+        db_col_structure = SettingsService.SettingsHandler('db_collection_tags')
+
     #Check minimum requirements
-    if ValidateService.ValidateMinRequire(request):
+    if ValidateService.ValidateMinRequire(request, min_requirement):
+
         #Structure the request for MongoDB
-        formated_request = ValidateService.ValidateFormatPost(request)
+        formated_request = ValidateService.ValidateFormatPost(request, db_col_structure)
         
-        PostService.PostRequest(formated_request)
+        #Posts to MongoDB
+        PostService.PostRequest(formated_request, db_col)
 
-    #Fetches time and subtracts it with start_time
-    elapsed_time = time.monotonic() - start_time
-    #Prints how long the process took
-    print("API PostController process took:", elapsed_time, "sec")
+        result = "Request was sent"
+    else:
+        result = "Minimum requirements were not met"
+    
+    #Prints process duration
+    print("API GetController process took:", time.monotonic() - start_time, "sec")
 
-    return HttpResponse("None")
+    return HttpResponse(result)
     
