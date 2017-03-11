@@ -15,6 +15,9 @@ def Post(request):
     #Authenticate user
     #Add to related collection - if needed
 
+    #Defining variables
+    result = str
+
     #Decodes json and unlists it
     request = json.loads(request.body.decode("utf-8"))[0]
 
@@ -38,9 +41,13 @@ def Post(request):
         
         #Posts to MongoDB
         PostService.PostRequest(formated_request, db_col)
+
+        result = "Request was sent"
+    else:
+        result = "Minimum requirements were not met"
     
     #Prints process duration
     print("API GetController process took:", time.monotonic() - start_time, "sec")
 
-    return HttpResponse("None")
+    return HttpResponse(result)
     
