@@ -1,12 +1,25 @@
 from app.services.conn import *
 import datetime
 
-# Posts data into given entity's collection
+#IN: Formated dict for post request use
+#OUT: The post request with ObjectID
+#Posts data into given entity's collection
 def PostRequest(request, col):
     #Timestamp
     request['created_on'] = datetime.datetime.utcnow()
 
-    print(request)
-    #col.insert_one(request)
+    eval(col).insert_one(request)
 
+    return request
 
+#IN: Formated dicts in a list for post request use
+#OUT: The post requests with ObjectIDs
+#Post multiple documents at once(Single documents does work too)
+def PostRequestMany(request, col):
+    #Timestamp every dict in the request list
+    for item in request:
+        item['created_on'] = datetime.datetime.utcnow()
+    
+    eval(col).insert_many(request).inserted_ids
+
+    return request

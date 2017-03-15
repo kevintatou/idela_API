@@ -1,21 +1,22 @@
-from app.services import SettingsService
+from app.services import SettingsService, GetService, PostService, UpdateService
 from bson import ObjectId
+from copy import copy
 import datetime
 
 #Validates a dictionary for mongodb query use
 #IN: Simple dict
-#OUT: A structured dict for MongoDB GET usage
+#OUT: A structured dict for MongoDB GET use
 def ValidateGetKeys(request):
     #Defining variables
     attribute = {}
     result = {}
-    
+
     allowed_keys = SettingsService.SettingsHandler('allowed_keys')
     db_collections = SettingsService.SettingsHandler('db_collections')
 
-    #Query to find multiple objects by ObjectIds
-    #collection.find({"_id":{ "$in": [id, id]}})
-
+    #######Query to find multiple objects by ObjectIds
+    #######collection.find({"_id":{ "$in": [id, id]}})
+    
     #Checks if keys are valid
     for key in allowed_keys:
         #if key in dict
@@ -47,21 +48,18 @@ def ValidateGetKeys(request):
 #IN: Simple dictionary, collection
 #OUT: Bool
 def ValidateMinRequire(request, min_requirement):
-    #Loops through the request and removes keys from min_requirement if they exist in request 
-    for post_key in request:
-        if post_key in min_requirement:
-            min_requirement.remove(post_key)
+    
+    #Checks if min_requirement keys exist in request, If not return False
+    for key in min_requirement:
+        if key not in request: 
+            return False
+    
+    return True
 
-    #Checks if the minimum requirements are met: Met if min_requirement is empty
-    if not min_requirement:
-        return True
-    else:
-        return False
-
-#Turns the form request data into a dict for MongoDB use
-#IN: Simple dictionary and structure dict to create
+#Turns a simple dict to a sturctured one
+#IN: Simple dictionary to structure and a structured dict as a guide
 #OUT: A structured dict
-def ValidateFormatPost(request, structure):
+def FormatDict(request, structure):
     for key in structure:
         #if the key in structure is dict return true
         if type(structure[key]) is dict:
@@ -86,8 +84,49 @@ def ValidateFormatPost(request, structure):
                     structure[key] = request[key].split(" ")
 
     return structure
-    
-def ValidateExistInDB(request, col):
-    
-    #if db.mycollection.find({'UserIDS': { "$in": newID}}).count() > 0.
-    return request
+
+def ValidateDBRelation(request, db_col):
+    get_request = {}
+    post_list = []
+
+    #If a node document was created before make the relations
+    if db_col == 'node':
+        #Add owner and members
+        #Update existing tags
+
+        #Adds a col key with value tag
+        get_request['col'] = 'tag'
+
+        #Gets the structure guide needed for MongoDB post use
+        db_col_structure = SettingsService.SettingsHandler('db_collection_tags')
+
+        #Loop through all the node tags
+        for tag_name in request['tags']:
+            get_request['name'] = tag_name
+            
+            #Validate for get request use
+            get_result = ValidateGetKeys(get_request)
+            
+            #Makes a get request for a tag 
+            get_result = GetService.GetRequest(get_result)
+
+            #Format request for MongoDB use
+            formated_request = FormatDict(get_request, db_col_structure)
+            
+            #If get_result of the get request is empty (Nothing was found in DB)
+            #If no document(tag) was found, append the tag to post_list
+            if get_result.count() == 0:
+                #Takes the ObjectId from request and turns into a string
+                formated_request['nodes'] = [str(request['_id'])]
+                
+                #Appends a copy of formated_request
+                post_list.append(copy(formated_request))
+            #If document(tag) was found, update the related nodes in the tag document
+            elif get_result.count() != 0:
+                UpdateService.UpdateRequest(get_result, get_request['col'])
+        
+        #If post_list has any items make a post request
+        if len(post_list) > 0:
+           PostService.PostRequestMany(post_list, get_request['col'])
+        else:
+            1+1

@@ -3,7 +3,8 @@ def SettingsHandler(settings_req):
     #Allowed terms to be used for MongoDB use
     if settings_req == "allowed_keys":
         return {
-            'col': str, 
+            'col': str,
+            'desc': str,
             'name': str, 
             'id': str, 
             'public': int, 
@@ -28,7 +29,7 @@ def SettingsHandler(settings_req):
             'feedback'
         ]
     #Minimum requirements for Node creation
-    elif settings_req == "min_node_req":
+    elif settings_req == "min_req_node":
         return [
             'tags',
             'name',
@@ -36,7 +37,7 @@ def SettingsHandler(settings_req):
             'owner'
         ]
     #Minimum requirements for User creation
-    elif settings_req == "min_user_req":
+    elif settings_req == "min_req_user":
         return [
             'firstname',
             'lastname',
@@ -44,7 +45,7 @@ def SettingsHandler(settings_req):
             'tokens'
         ]
     #Minimum requirements for Tag creation
-    elif settings_req == "min_tags_req":
+    elif settings_req == "min_req_tags":
         return  [
             'name'
         ]
@@ -75,7 +76,7 @@ def SettingsHandler(settings_req):
                 ],
             },
             'trending': 0,
-            'rating'' : {
+            'rating' : {
                 'quality_score': 0,
                 'opinion_score': 0,
                 'relevance_score': 0,
@@ -91,7 +92,7 @@ def SettingsHandler(settings_req):
             'lastname': '',
             'email': '',
             'desc': '',
-            'tokens' '',
+            'tokens': '',
             'nodes': [
                 ''
             ],
