@@ -1,4 +1,4 @@
-##Setup
+## Setup
 1. Install Python v3.5.2
 2. Install Django v1.10.4
 3. git clone https://github.com/kevintatou/idela_API.git
@@ -12,7 +12,7 @@
 
 ***Note: Proper SSH key is required.***
 
-##API Docs
+## API Docs
 ### Get Requests
 #### Get Requests - Bare-bones
 /get/`key`=`value` 
