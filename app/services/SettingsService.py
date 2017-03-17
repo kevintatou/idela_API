@@ -10,7 +10,7 @@ def SettingsHandler(settings_req):
             'public': int, 
             'tags': str, 
             'views': int, 
-            'trending': int, 
+            'trend': int, 
             'media': int, 
             'date': int, 
             'alias': str, 
@@ -67,7 +67,7 @@ def SettingsHandler(settings_req):
             'public': 0,
             'token': '',
             'image': '',
-            'media': '',
+            'type': '',
             'views': 0,
             'user': {
                 'owner': '',
@@ -75,21 +75,21 @@ def SettingsHandler(settings_req):
                     ''
                 ],
             },
-            'trending': 0,
+            'trend': 0,
             'rating' : {
-                'quality_score': 0,
-                'opinion_score': 0,
-                'relevance_score': 0,
-                'opinion_votes': 0,
-                'quality_votes': 0,
-                'relevance_votes': 0
+                'qua_score': 0,
+                'op_score': 0,
+                'rel_score': 0,
+                'op_votes': 0,
+                'qua_votes': 0,
+                'rel_votes': 0
             }
         }
     elif settings_req == "db_collection_user":
         return {
             'alias': '',
-            'firstname': '',
-            'lastname': '',
+            'fname': '',
+            'lname': '',
             'email': '',
             'desc': '',
             'tokens': '',
@@ -99,7 +99,7 @@ def SettingsHandler(settings_req):
             'image': '',
             'views': 0,
             'weekly': 0,
-            'trending': 0,
+            'trend': 0,
             'flags': {
                 'level': 0,
                 'comment': ''

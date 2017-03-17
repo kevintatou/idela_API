@@ -1,11 +1,17 @@
 from app.services.conn import *
 
+#IN: Where, WhatToUpdate
 def UpdateRequest(request, col):
-    decoded_doc = bson.BSON.decode(request)
-    '''eval(col).update({
-        '_id': request['_id']
-        },{
-        '$set': {
-            'nodes': 'hej'
-        }
-    }, upsert=False, multi=False)'''
+    print("-------------------------------------")
+    
+    for item in request:
+        print(item)
+        '''
+        eval(col).update({
+            '_id': item['_id']
+            },{
+            '$set': {
+                'nodes': 'wwww'
+            }
+        }, upsert=False, multi=False
+        '''
