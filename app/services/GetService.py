@@ -8,6 +8,7 @@ from app.services.conn import *
 #IN: Dict with 3 keys(collection, attribute, select) containing information
 #OUT: Query result from DB
 def GetRequest(req_values):
+    
     #Define variables
     select = None
     collection = None

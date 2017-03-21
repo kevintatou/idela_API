@@ -3,13 +3,14 @@ def SettingsHandler(settings_req):
     #Allowed terms to be used for MongoDB use
     if settings_req == "allowed_keys":
         return {
-            'col': str, 
+            'col': str,
+            'desc': str,
             'name': str, 
             'id': str, 
             'public': int, 
             'tags': str, 
             'views': int, 
-            'trending': int, 
+            'trend': int, 
             'media': int, 
             'date': int, 
             'alias': str, 
@@ -28,31 +29,32 @@ def SettingsHandler(settings_req):
             'feedback'
         ]
     #Minimum requirements for Node creation
-    elif settings_req == "min_node_req":
+    elif settings_req == "min_req_node":
         return [
             'tags',
             'name',
+            'type',
             'public',
             'owner'
         ]
     #Minimum requirements for User creation
-    elif settings_req == "min_user_req":
+    elif settings_req == "min_req_user":
         return [
-            'firstname',
-            'lastname',
+            'fname',
+            'lname',
             'email',
             'tokens'
         ]
     #Minimum requirements for Tag creation
-    elif settings_req == "min_tags_req":
+    elif settings_req == "min_req_tags":
         return  [
             'name'
         ]
     #MongoDB structure for Node collection
     elif settings_req == "db_collection_node":
         return {
-            'created_on': 0,
-            'updated_on': 0,
+            'created': 0,
+            'updated': 0,
             'weekly': 0,
             'tags': [
                 ''
@@ -66,7 +68,7 @@ def SettingsHandler(settings_req):
             'public': 0,
             'token': '',
             'image': '',
-            'media': '',
+            'type': '',
             'views': 0,
             'user': {
                 'owner': '',
@@ -74,37 +76,37 @@ def SettingsHandler(settings_req):
                     ''
                 ],
             },
-            'trending': 0,
-            'rating'' : {
-                'quality_score': 0,
-                'opinion_score': 0,
-                'relevance_score': 0,
-                'opinion_votes': 0,
-                'quality_votes': 0,
-                'relevance_votes': 0
+            'trend': 0,
+            'rating' : {
+                'qua_score': 0,
+                'op_score': 0,
+                'rel_score': 0,
+                'op_votes': 0,
+                'qua_votes': 0,
+                'rel_votes': 0
             }
         }
     elif settings_req == "db_collection_user":
         return {
             'alias': '',
-            'firstname': '',
-            'lastname': '',
+            'fname': '',
+            'lname': '',
             'email': '',
             'desc': '',
-            'tokens' '',
+            'tokens': '',
             'nodes': [
                 ''
             ],
             'image': '',
             'views': 0,
             'weekly': 0,
-            'trending': 0,
+            'trend': 0,
             'flags': {
                 'level': 0,
                 'comment': ''
             },
-            'created_on': 0,
-            'updated_on': 0
+            'created': 0,
+            'updated': 0
         }
     elif settings_req == "db_collection_tags":
         return {
@@ -113,8 +115,8 @@ def SettingsHandler(settings_req):
             'nodes': [ 
                 ''
             ],
-            'created_on': 0,
-            'updated_on': 0
+            'created': 0,
+            'updated': 0
         }
     #settings_req didnt meet any of the listed variables
     else:

@@ -14,7 +14,7 @@ def Get(request, catch_all):
     
     #Validate for mongodb query use
     dict1 = ValidateService.ValidateGetKeys(catch_all)
-
+    
     #Makes a get request
     result = GetService.GetRequest(dict1)
 
