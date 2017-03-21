@@ -6,14 +6,12 @@ import json
 from app.services import PostService, ValidateService, SettingsService
 import time
 
-# Post User data
 def Post(request):
     #Fetches time
     start_time = time.monotonic()
     
     ########### Tasks - To Do ###########
     #Authenticate user
-    #Add to related collection - if needed
 
     #Defining variables
     result = str
@@ -23,31 +21,36 @@ def Post(request):
 
     db_col = request['col']
 
+    #Gets proper variables from SettingsService
     if db_col == 'node':
-        min_requirement = SettingsService.SettingsHandler('min_node_req')
+        min_requirement = SettingsService.SettingsHandler('min_req_node')
         db_col_structure = SettingsService.SettingsHandler('db_collection_node')
     elif db_col == 'user':
-        min_requirement = SettingsService.SettingsHandler('min_user_req')
+        min_requirement = SettingsService.SettingsHandler('min_req_user')
         db_col_structure = SettingsService.SettingsHandler('db_collection_user')
     elif db_col == 'tags':
-        min_requirement = SettingsService.SettingsHandler('min_tags_req')
+        min_requirement = SettingsService.SettingsHandler('min_req_tags')
         db_col_structure = SettingsService.SettingsHandler('db_collection_tags')
-
+    
     #Check minimum requirements
     if ValidateService.ValidateMinRequire(request, min_requirement):
 
-        #Structure the request for MongoDB
-        formated_request = ValidateService.ValidateFormatPost(request, db_col_structure)
+        #Structure the request for MongoDB Post
+        formated_request = ValidateService.FormatDict(request, db_col_structure)
         
         #Posts to MongoDB
-        PostService.PostRequest(formated_request, db_col)
-
+        posted_data = PostService.PostRequest(formated_request, db_col)
+        
+        if db_col == 'node':
+            #Create relations
+            ValidateService.ValidateDBRelation(posted_data, db_col)
+        
         result = "Request was sent"
     else:
         result = "Minimum requirements were not met"
     
     #Prints process duration
-    print("API GetController process took:", time.monotonic() - start_time, "sec")
+    print("API PostController process took:", time.monotonic() - start_time, "sec")
 
     return HttpResponse(result)
     

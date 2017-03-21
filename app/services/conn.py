@@ -11,4 +11,4 @@ user = db.user
 node = db.node
 tag = db.tag
 feedback = db.feedback
-softdelete = db.softdelete
+softdelete = db.softdelet
