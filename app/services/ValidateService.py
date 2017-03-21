@@ -91,8 +91,8 @@ def ValidateDBRelation(request, db_col):
 
     #If a node document was created before make the relations
     if db_col == 'node':
+        #Auth Users
         #Add owner and members
-        #Update existing tags
 
         #Adds a col key with value tag
         get_request['col'] = 'tag'
@@ -113,7 +113,6 @@ def ValidateDBRelation(request, db_col):
             #Format request for MongoDB use
             formated_request = FormatDict(get_request, db_col_structure)
             
-            #If get_result of the get request is empty (Nothing was found in DB)
             #If no document(tag) was found, append the tag to post_list
             if get_result.count() == 0:
                 #Takes the ObjectId from request and turns into a string
@@ -123,10 +122,11 @@ def ValidateDBRelation(request, db_col):
                 post_list.append(copy(formated_request))
             #If document(tag) was found, update the related nodes in the tag document
             elif get_result.count() != 0:
-                UpdateService.UpdateRequest(get_result, get_request['col'])
+                push_dict = {'nodes': str(request['_id'])}
+                #Update the existing tags
+                UpdateService.UpdateRequest(get_request['col'], get_result, push_dict)
         
         #If post_list has any items make a post request
         if len(post_list) > 0:
-           PostService.PostRequestMany(post_list, get_request['col'])
-        else:
-            1+1
+            #Posts many(or single) documents to MongoDB
+            PostService.PostRequestMany(post_list, get_request['col'])

@@ -6,9 +6,9 @@ import datetime
 #Posts data into given entity's collection
 def PostRequest(request, col):
     #Timestamp
-    request['created_on'] = datetime.datetime.utcnow()
+    request['created'] = datetime.datetime.utcnow()
 
-    eval(col).insert_one(request)
+    eval(col).insert(request)
 
     return request
 
@@ -18,7 +18,7 @@ def PostRequest(request, col):
 def PostRequestMany(request, col):
     #Timestamp every dict in the request list
     for item in request:
-        item['created_on'] = datetime.datetime.utcnow()
+        item['created'] = datetime.datetime.utcnow()
     
     eval(col).insert_many(request).inserted_ids
 

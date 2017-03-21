@@ -33,14 +33,15 @@ def SettingsHandler(settings_req):
         return [
             'tags',
             'name',
+            'type',
             'public',
             'owner'
         ]
     #Minimum requirements for User creation
     elif settings_req == "min_req_user":
         return [
-            'firstname',
-            'lastname',
+            'fname',
+            'lname',
             'email',
             'tokens'
         ]
@@ -52,8 +53,8 @@ def SettingsHandler(settings_req):
     #MongoDB structure for Node collection
     elif settings_req == "db_collection_node":
         return {
-            'created_on': 0,
-            'updated_on': 0,
+            'created': 0,
+            'updated': 0,
             'weekly': 0,
             'tags': [
                 ''
@@ -104,8 +105,8 @@ def SettingsHandler(settings_req):
                 'level': 0,
                 'comment': ''
             },
-            'created_on': 0,
-            'updated_on': 0
+            'created': 0,
+            'updated': 0
         }
     elif settings_req == "db_collection_tags":
         return {
@@ -114,8 +115,8 @@ def SettingsHandler(settings_req):
             'nodes': [ 
                 ''
             ],
-            'created_on': 0,
-            'updated_on': 0
+            'created': 0,
+            'updated': 0
         }
     #settings_req didnt meet any of the listed variables
     else:
