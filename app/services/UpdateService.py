@@ -10,5 +10,5 @@ def UpdateRequest(col, cursor, push_dict):
             '_id': document['_id']
         },{
             '$push': push_dict,
-            '$set': {'update': datetime.datetime.now()}
+            '$set': {'updated': datetime.datetime.now()}
         }, upsert=False, multi=False )

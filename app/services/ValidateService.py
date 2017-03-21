@@ -61,18 +61,9 @@ def ValidateMinRequire(request, min_requirement):
 #OUT: A structured dict
 def FormatDict(request, structure):
     for key in structure:
-        #if the key in structure is dict return true
+        #If the structure key is a dict call this function with the embedded structure keys
         if type(structure[key]) is dict:
-            #Looks for the nested keys in the parent key
-            for nested_key in structure[key]:
-                #Loops through the request and adds values to the proper places
-                if nested_key in request:
-                    if type(structure[key][nested_key]) is list:
-                        structure[key][nested_key] = request[nested_key].split(" ")
-                    elif type(structure[key][nested_key]) == str:
-                        structure[key][nested_key] = str(request[nested_key])
-                    elif type(structure[key][nested_key]) == int:
-                        structure[key][nested_key] = int(request[nested_key])
+            FormatDict(request,structure[key])
         else:
             #Loops through the request and adds values to the proper places
             if key in request:
@@ -104,7 +95,7 @@ def ValidateDBRelation(request, db_col):
         for tag_name in request['tags']:
             get_request['name'] = tag_name
             
-            #Validate for get request use
+            #Validate and format for get request use
             get_result = ValidateGetKeys(get_request)
             
             #Makes a get request for a tag 

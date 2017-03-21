@@ -71,7 +71,9 @@ def SettingsHandler(settings_req):
             'type': '',
             'views': 0,
             'user': {
-                'owner': '',
+                'owner': [
+                    ''
+                ],
                 'members': [
                     ''
                 ],
