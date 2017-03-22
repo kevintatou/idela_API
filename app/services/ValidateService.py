@@ -3,6 +3,9 @@ from bson import ObjectId
 from copy import copy
 import datetime
 
+############# TO DO #############
+#Figure out something better
+
 #Validates a dictionary for mongodb query use
 #IN: Simple dict
 #OUT: A structured dict for MongoDB GET use
@@ -56,6 +59,9 @@ def ValidateMinRequire(request, min_requirement):
     
     return True
 
+############# TO DO #############
+#Move to FormatService
+
 #Turns a simple dict to a sturctured one
 #IN: Simple dictionary to structure and a structured dict as a guide
 #OUT: A structured dict
@@ -76,6 +82,8 @@ def FormatDict(request, structure):
 
     return structure
 
+############# TO DO #############
+#Move to a better location
 def ValidateDBRelation(request, db_col):
     get_request = {}
     post_list = []

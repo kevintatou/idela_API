@@ -5,6 +5,13 @@ from app.services.conn import *
 from app.services import GetService, ValidateService
 import time
 
+############# TO DO #############
+#collection?name=hello&tags=game,computer
+#Split ? and move to new var
+#Split & (makes the keys)
+#Split = (key, values)
+#Split , into list and add "$in" as key to list - {"_id":{ "$in": value_list}}
+
 def Get(request, catch_all):
     #Fetches time
     start_time = time.monotonic()
