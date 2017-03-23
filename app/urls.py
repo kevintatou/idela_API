@@ -4,7 +4,7 @@ from app.controllers import GetController, PostController
 
 urlpatterns = [
     #Get URL(s)
-    url(r'^get/(?P<catch_all>.*)$', GetController.Get, name='Get'),
+    url(r'^get/(?P<url_catch>.*)$', GetController.Get, name='Get'),
     #Post URL(s)
     url(r'^post/$', PostController.Post, name='Post'),
 ]

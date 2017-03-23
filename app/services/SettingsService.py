@@ -1,7 +1,7 @@
 #Overall useful variables
 def SettingsHandler(settings_req):
     #Allowed terms to be used for MongoDB use
-    if settings_req == "allowed_keys":
+    if settings_req == "allowed_get_keys":
         return {
             'col': str,
             'desc': str,
