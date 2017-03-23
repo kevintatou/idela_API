@@ -1,3 +1,4 @@
+from bson import ObjectId
 
 #Turns a simple dict to a sturctured one
 #IN: Simple dictionary to structure and a structured dict as a guide
@@ -19,13 +20,56 @@ def FormatDict(request, structure):
 
     return structure
 
-def FormatMultipleGetValues(request):
+#Splits values for MongoDB use
+#IN: Dict
+#OUT: Dict with splited values
+def MongoDBifyMutliGetValues(request):
     for key in request:
         request[key] = request[key].split(",")
 
+        #Ff the split made more than a total of 1 items add $in
         if len(request[key]) > 1:
             request[key] = {"$in" : request[key]}
+        #Else make it a string 
         else:
             request[key] = str(request[key][0])
     
     return request
+
+#
+#IN:
+#OUT:
+def FormatLegalKeys(request, allowed_keys):
+    result={}
+    tmp_list=[]
+    for key in allowed_keys:
+        if key in request:
+            if key == 'id':
+                if type(request.get(key)) is dict:
+                    for item in request.get(key)['$in']:
+                        item = ObjectId(item)
+                        tmp_list.append(item)
+                        result['_id'] = {}
+                        result['_id']['$in'] = tmp_list
+                else:
+                    result['_id'] = ObjectId(request.get(key))
+            elif allowed_keys.get(key) == int:
+                if type(request.get(key)) is dict:
+                    for item in request.get(key)['$in']:
+                        item = int(item)
+                        tmp_list.append(item)
+                        result[key] = {}
+                        result[key]['$in'] = tmp_list
+                else:
+                    result[key] = int(request.get(key))
+            elif allowed_keys.get(key) == str:
+                if type(request.get(key)) is dict:
+                    for item in request.get(key)['$in']:
+                        item = str(item)
+                        tmp_list.append(item)
+                        result[key] = {}
+                        result[key]['$in'] = tmp_list
+                else:
+                    result[key] = str(request.get(key))
+    
+    return result

@@ -16,8 +16,8 @@ def SettingsHandler(settings_req):
             'alias': str, 
             'weekly': int, 
             'nodes': str,
-            'select': str,
-            'email': str
+            'email': str,
+            'owner': str
         }
     #MongoDB collections
     elif settings_req == "db_collections":
