@@ -21,13 +21,15 @@ def FormatDict(request, structure):
     return structure
 
 #Splits values for MongoDB use
-#IN: Dict
+#IN: Dict with key and value(s) 
 #OUT: Dict with splited values
 def MongoDBifyMutliGetValues(request):
     for key in request:
-        request[key] = request[key].split(",")
+        #If value is str split into a list
+        if type(request[key]) is str:
+            request[key] = request[key].split(",")
 
-        #Ff the split made more than a total of 1 items add $in
+        #If the split made more than a total of 1 items add $in
         if len(request[key]) > 1:
             request[key] = {"$in" : request[key]}
         #Else make it a string 
