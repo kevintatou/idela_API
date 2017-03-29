@@ -19,9 +19,9 @@
 ```
 Gets everythings where `key`=`value`.
 ```
-/get/`key1`=`value1`&`key2`=`value2`
+/get/`key1`=`value1`&`key2`=`value2,value3`
 ```
-Gets everythings where `key`=`value` and `key2`=`value2`.
+Gets everythings where `key`=`value` and `key2`=`value2` and `value3`.
 ```
 #### Get Requests - Allowed keys
 'alias',
@@ -42,12 +42,16 @@ Gets everythings where `key`=`value` and `key2`=`value2`.
 ```
 Gets all documents from 'collection' named 'node' in the database.
 ```
-/get/`col`=`node`&`name`=`LiamNode`
+/get/`col`=`node`&`owner`=`liam`
 ```
 Gets all documents from 'collection' named 'node' in the database 
-where field name is 'name' and has the value of 'liam'.
+where key is 'owner' and has the value 'liam'.
 ```
-***Note: Unlimited amount of filters allowed, but do NOT duplicate terms***
+/get/`col`=`node`&`members`=`liam,kevin`
+```
+Gets all documents from 'collection' named 'node' in the database 
+where key is 'owner' and has the value 'liam' and 'kevin'.
+```
 
 ### Post Requests
 #### Post Requests - Bare-bones
@@ -57,6 +61,7 @@ where field name is 'name' and has the value of 'liam'.
     {
         key: value,
         key2: value2
+        key3: value3,value4
     }
 ]
 ```
@@ -138,7 +143,7 @@ Posts a json object to /post with keys including values
 [
     {
         'col': 'node',
-        'tags': 'github code',
+        'tags': 'github,code',
         'name': 'Bob the Coder',
         'public': 1,
         'owner': '0560940564',
@@ -146,4 +151,6 @@ Posts a json object to /post with keys including values
     }
 ]
 ```
-Requests a json object to post. Request want to be put in node collection `'col': 'node'` in DB with keys containing a value `'name': 'Bob the Coder'`ect. The tags key `'tags': 'github code'` gets split by spaces into a array of strings `['github', 'code']`, meaning the node gets two tags not a single tag. The same goes with members key. Note that `owner` and `members` values are MongoDB ObjectID(s).
+Requests a json object to post. Request want to be put in node collection `'col': 'node'` in DB with keys containing a value `'name': 'Bob the Coder'`ect. The tags key `'tags': 'github,code'` gets split by comma into a array of strings `['github','code']`, meaning the node gets two tags not a single tag. The same goes with members key. Note that `owner` and `members` values are MongoDB ObjectID(s).
+
+When posting a node tags related to that node get automaticly updated and new tags get created if they dont exist in the database.
