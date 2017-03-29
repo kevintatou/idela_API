@@ -17,7 +17,9 @@ def SettingsHandler(settings_req):
             'weekly': int, 
             'nodes': str,
             'email': str,
-            'owner': str
+            'owner': str,
+            'members': str,
+            'comment' : str
         }
     #MongoDB collections
     elif settings_req == "db_collections":
@@ -53,6 +55,7 @@ def SettingsHandler(settings_req):
     #MongoDB structure for Node collection
     elif settings_req == "db_collection_node":
         return {
+            '_id': '',
             'created': 0,
             'updated': 0,
             'weekly': 0,
@@ -60,10 +63,10 @@ def SettingsHandler(settings_req):
                 ''
             ],
             'desc': '',
-            'flags': {
+            'flags': [{
                 'comment': '',
                 'rating': '',
-            },
+            }],
             'name': '',
             'public': 0,
             'token': '',
@@ -90,6 +93,7 @@ def SettingsHandler(settings_req):
         }
     elif settings_req == "db_collection_user":
         return {
+            '_id': '',
             'alias': '',
             'fname': '',
             'lname': '',
@@ -103,15 +107,16 @@ def SettingsHandler(settings_req):
             'views': 0,
             'weekly': 0,
             'trend': 0,
-            'flags': {
+            'flags': [{
                 'level': 0,
                 'comment': ''
-            },
+            }],
             'created': 0,
             'updated': 0
         }
-    elif settings_req == "db_collection_tags":
+    elif settings_req == "db_collection_tag":
         return {
+            '_id': '',
             'name': '',
             'desc': '',
             'nodes': [ 

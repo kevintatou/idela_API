@@ -23,6 +23,13 @@ def Get(request, url_catch):
     #Removes col key from url_catch
     del url_catch["col"]
 
+    if col == 'node':
+        col_structure = SettingsService.SettingsHandler("db_collection_node")
+    elif col == 'tag':
+        col_structure = SettingsService.SettingsHandler("db_collection_tag")
+    elif col == 'user':
+        col_structure = SettingsService.SettingsHandler("db_collection_user")
+
     #Checks if select is used
     if "select" in url_catch:
         select = url_catch['select']
@@ -30,17 +37,19 @@ def Get(request, url_catch):
         del url_catch["select"]
     else:
         select = None
-   
-    #MongoDBify multiple key values
-    url_catch = FormatService.MongoDBifyMutliGetValues(url_catch)
-    
-    url_catch = FormatService.FormatLegalKeys(url_catch, allowed_get_keys)
 
-    print("url_catch:",url_catch)
+    if 'id' in url_catch:
+        url_catch['_id'] = url_catch['id']
+        del url_catch['id']
 
-    #add embedded keys
+    url_catch = FormatService.FormatDict(url_catch, col_structure, True)
     
-    #Makes a get request
+    url_catch = FormatService.Inify(url_catch)
+
+    url_catch = FormatService.Objectify(url_catch)
+
+    url_catch = FormatService.MergeParentChildKeys(url_catch)
+
     url_catch = GetService.GetRequest(col, url_catch, select)
 
     #Prints process duration

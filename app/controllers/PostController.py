@@ -36,7 +36,11 @@ def Post(request):
     if ValidateService.ValidateMinRequire(request, min_requirement):
 
         #Structure the request for MongoDB Post
-        formated_request = FormatService.FormatDict(request, db_col_structure)
+        formated_request = FormatService.FormatDict(request, db_col_structure, True)
+
+        #Removes _id because it confuses MongoDB
+        if '_id' in formated_request:
+            del formated_request['_id']
         
         #Posts to MongoDB
         posted_data = PostService.PostRequest(formated_request, db_col)

@@ -10,13 +10,12 @@ def DBRelation(request, db_col):
         node_id = str(request['_id'])
 
         #Gets the structure guide needed for MongoDB post use
-        db_col_structure = SettingsService.SettingsHandler('db_collection_tags')
+        db_col_structure = SettingsService.SettingsHandler('db_collection_tag')
         allowed_get_keys = SettingsService.SettingsHandler("allowed_get_keys")
 
-        #Formats tags for MongoDB use
-        tags = FormatService.MongoDBifyMutliGetValues({'name': request['tags']})
-        tags = FormatService.FormatLegalKeys(tags, allowed_get_keys)
-
+        #Adds '$in' where needed
+        tags = FormatService.Inify({'name': request['tags']})
+        
         #Gets the existing tags in MongoDB
         get_result = GetService.GetRequest('tag', tags, None)
 
@@ -28,7 +27,7 @@ def DBRelation(request, db_col):
                 #Removes the tag from tags list
                 tags['name']['$in'].remove(document['name'])
         
-        #Create a new tag document to tag collection
+        #Create a new tag document and post to tag collection
         if len(tags['name']['$in']) > 0:
             tmp_list = {}
             post_list = []
@@ -39,7 +38,7 @@ def DBRelation(request, db_col):
                 tmp_list['nodes'] = node_id
 
                 #Format for MongoDB use
-                formated_request = FormatService.FormatDict(tmp_list, db_col_structure)
+                formated_request = FormatService.FormatDict(tmp_list, db_col_structure, True)
 
                 #Makes a copy of formated_request and appends to post_list
                 post_list.append(copy(formated_request))
