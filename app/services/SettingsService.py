@@ -28,7 +28,8 @@ def SettingsHandler(settings_req):
             'node',
             'tag',
             'softdelete',
-            'feedback'
+            'feedback',
+            'placeholder'
         ]
     #Minimum requirements for Node creation
     elif settings_req == "min_req_node":
@@ -52,6 +53,12 @@ def SettingsHandler(settings_req):
         return  [
             'name'
         ]
+    #Minimum requirements for Placeholder creation
+    elif settings_req == "min_req_placeholder":
+        return  [
+            'title',
+            'desc'
+        ]
     #MongoDB structure for Node collection
     elif settings_req == "db_collection_node":
         return {
@@ -63,10 +70,12 @@ def SettingsHandler(settings_req):
                 ''
             ],
             'desc': '',
-            'flags': [{
-                'comment': '',
-                'rating': '',
-            }],
+            'flags': [
+                {
+                    'comment': '',
+                    'rating': 0,
+                }
+            ],
             'name': '',
             'public': 0,
             'token': '',
@@ -107,10 +116,12 @@ def SettingsHandler(settings_req):
             'views': 0,
             'weekly': 0,
             'trend': 0,
-            'flags': [{
-                'level': 0,
-                'comment': ''
-            }],
+            'flags': [
+                {
+                    'level': 0,
+                    'comment': ''
+                }
+            ],
             'created': 0,
             'updated': 0
         }
@@ -124,6 +135,21 @@ def SettingsHandler(settings_req):
             ],
             'created': 0,
             'updated': 0
+        }
+    elif settings_req == "db_collection_placeholder":
+        return {
+            'title': '',
+            'desc': '',
+            'views': 0,
+            'answer': [
+                {
+                    'type': '',
+                    'answer_desc': '',
+                    'votes': 0,
+                    'created': 0
+                }
+            ],
+            'created': 0
         }
     #settings_req didnt meet any of the listed variables
     else:

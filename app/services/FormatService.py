@@ -12,6 +12,7 @@ def FormatDict(request, structure, remove_empty):
             return_structure[key] = FormatDict(request, structure[key], remove_empty)
             if remove_empty == True and return_structure[key] == {}:
                 del return_structure[key]
+        #If the structure key is a list and a dict is in the list call this function with embedded structure keys
         elif type(structure[key]) is list:
             for item in structure[key]:
                 if type(item) is dict:
@@ -42,8 +43,10 @@ def Inify(request):
             Inify(request[key])
         elif type(request[key]) is str:
             request[key] = request[key].split(",")
+            #If the split only made one item make it into a single str
             if len(request[key]) == 1:
                 request[key] = request[key][0]
+            #If the split made more than one item add $in
             elif len(request[key]) > 1:
                 request[key] = {"$in" : request[key]}
         elif type(request[key]) is list and len(request[key]) > 1:
@@ -76,13 +79,16 @@ def Objectify(request):
 #IN: Structured dict
 #Out: Dict with merged parent and child keys except for '$in'
 def MergeParentChildKeys(request):
+    #Makes a copy of the request 
     return_dict = copy(request)
+    #Loops through the request and edits the copy of request (return_dict)
     for key in request:
         if type(request[key]) is dict and '$in' not in request[key]:
+            #Merge the nested keys with parent keys 
             for nested_key in request[key]:
                 merged_key = key + '.' + nested_key
                 return_dict[merged_key] = request[key][nested_key]
-
-                del return_dict[key]
+            #Remove the parent key (nested keys also gets removed by this)
+            del return_dict[key]
 
     return return_dict

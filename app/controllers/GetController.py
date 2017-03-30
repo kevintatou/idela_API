@@ -20,15 +20,19 @@ def Get(request, url_catch):
     for item in db_collections:
         if item in url_catch["col"]:
             col = item
+    
     #Removes col key from url_catch
     del url_catch["col"]
 
+    #Gets the proper collection structure
     if col == 'node':
         col_structure = SettingsService.SettingsHandler("db_collection_node")
     elif col == 'tag':
         col_structure = SettingsService.SettingsHandler("db_collection_tag")
     elif col == 'user':
         col_structure = SettingsService.SettingsHandler("db_collection_user")
+    elif col == 'placeholder':
+        col_structure = SettingsService.SettingsHandler("db_collection_placeholder")
 
     #Checks if select is used
     if "select" in url_catch:
@@ -38,21 +42,28 @@ def Get(request, url_catch):
     else:
         select = None
 
+    #Changes the the id key to _id 
     if 'id' in url_catch:
         url_catch['_id'] = url_catch['id']
         del url_catch['id']
 
+    #Strcutures the request
     url_catch = FormatService.FormatDict(url_catch, col_structure, True)
     
+    #Adds $in to keys if needed
     url_catch = FormatService.Inify(url_catch)
 
+    #Turns _id key into ObjectId(s)
     url_catch = FormatService.Objectify(url_catch)
 
+    #Merges nested keys with parent keys for MongoDB Use
     url_catch = FormatService.MergeParentChildKeys(url_catch)
 
+    #Makes a get request
     url_catch = GetService.GetRequest(col, url_catch, select)
 
     #Prints process duration
     print("API GetController process took:", time.monotonic() - start_time, "sec")
 
+    #Returns the get response from MongoDB
     return HttpResponse(dumps(url_catch))

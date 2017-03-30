@@ -31,6 +31,9 @@ def Post(request):
     elif db_col == 'tags':
         min_requirement = SettingsService.SettingsHandler('min_req_tags')
         db_col_structure = SettingsService.SettingsHandler('db_collection_tags')
+    elif db_col == 'placeholder':
+        min_requirement = SettingsService.SettingsHandler('min_req_placeholder')
+        db_col_structure = SettingsService.SettingsHandler('db_collection_placeholder')
     
     #Check minimum requirements
     if ValidateService.ValidateMinRequire(request, min_requirement):

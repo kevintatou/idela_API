@@ -19,3 +19,6 @@ node = db.node_test
 tag = db.tag_test
 feedback = db.feedback_test
 softdelete = db.softdelete_test
+
+#Jespers Kandidat
+placeholder = db.placeholder
