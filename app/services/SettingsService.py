@@ -1,7 +1,7 @@
 #Overall useful variables
 def SettingsHandler(settings_req):
     #Allowed terms to be used for MongoDB use
-    if settings_req == "allowed_keys":
+    if settings_req == "allowed_get_keys":
         return {
             'col': str,
             'desc': str,
@@ -16,8 +16,10 @@ def SettingsHandler(settings_req):
             'alias': str, 
             'weekly': int, 
             'nodes': str,
-            'select': str,
-            'email': str
+            'email': str,
+            'owner': str,
+            'members': str,
+            'comment' : str
         }
     #MongoDB collections
     elif settings_req == "db_collections":
@@ -26,7 +28,8 @@ def SettingsHandler(settings_req):
             'node',
             'tag',
             'softdelete',
-            'feedback'
+            'feedback',
+            'placeholder'
         ]
     #Minimum requirements for Node creation
     elif settings_req == "min_req_node":
@@ -50,9 +53,16 @@ def SettingsHandler(settings_req):
         return  [
             'name'
         ]
+    #Minimum requirements for Placeholder creation
+    elif settings_req == "min_req_placeholder":
+        return  [
+            'title',
+            'desc'
+        ]
     #MongoDB structure for Node collection
     elif settings_req == "db_collection_node":
         return {
+            '_id': '',
             'created': 0,
             'updated': 0,
             'weekly': 0,
@@ -60,10 +70,12 @@ def SettingsHandler(settings_req):
                 ''
             ],
             'desc': '',
-            'flags': {
-                'comment': '',
-                'rating': '',
-            },
+            'flags': [
+                {
+                    'comment': '',
+                    'rating': 0,
+                }
+            ],
             'name': '',
             'public': 0,
             'token': '',
@@ -71,7 +83,9 @@ def SettingsHandler(settings_req):
             'type': '',
             'views': 0,
             'user': {
-                'owner': '',
+                'owner': [
+                    ''
+                ],
                 'members': [
                     ''
                 ],
@@ -88,6 +102,7 @@ def SettingsHandler(settings_req):
         }
     elif settings_req == "db_collection_user":
         return {
+            '_id': '',
             'alias': '',
             'fname': '',
             'lname': '',
@@ -101,15 +116,18 @@ def SettingsHandler(settings_req):
             'views': 0,
             'weekly': 0,
             'trend': 0,
-            'flags': {
-                'level': 0,
-                'comment': ''
-            },
+            'flags': [
+                {
+                    'level': 0,
+                    'comment': ''
+                }
+            ],
             'created': 0,
             'updated': 0
         }
-    elif settings_req == "db_collection_tags":
+    elif settings_req == "db_collection_tag":
         return {
+            '_id': '',
             'name': '',
             'desc': '',
             'nodes': [ 
@@ -117,6 +135,21 @@ def SettingsHandler(settings_req):
             ],
             'created': 0,
             'updated': 0
+        }
+    elif settings_req == "db_collection_placeholder":
+        return {
+            'title': '',
+            'desc': '',
+            'views': 0,
+            'answer': [
+                {
+                    'type': '',
+                    'answer_desc': '',
+                    'votes': 0,
+                    'created': 0
+                }
+            ],
+            'created': 0
         }
     #settings_req didnt meet any of the listed variables
     else:

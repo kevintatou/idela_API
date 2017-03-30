@@ -3,7 +3,7 @@ from django.http import JsonResponse
 from app.services.conn import *
 import json
 #Defining services
-from app.services import PostService, ValidateService, SettingsService
+from app.services import PostService, ValidateService, SettingsService, RelationService, FormatService
 import time
 
 def Post(request):
@@ -31,19 +31,26 @@ def Post(request):
     elif db_col == 'tags':
         min_requirement = SettingsService.SettingsHandler('min_req_tags')
         db_col_structure = SettingsService.SettingsHandler('db_collection_tags')
+    elif db_col == 'placeholder':
+        min_requirement = SettingsService.SettingsHandler('min_req_placeholder')
+        db_col_structure = SettingsService.SettingsHandler('db_collection_placeholder')
     
     #Check minimum requirements
     if ValidateService.ValidateMinRequire(request, min_requirement):
 
         #Structure the request for MongoDB Post
-        formated_request = ValidateService.FormatDict(request, db_col_structure)
+        formated_request = FormatService.FormatDict(request, db_col_structure, True)
+
+        #Removes _id because it confuses MongoDB
+        if '_id' in formated_request:
+            del formated_request['_id']
         
         #Posts to MongoDB
         posted_data = PostService.PostRequest(formated_request, db_col)
         
         if db_col == 'node':
             #Create relations
-            ValidateService.ValidateDBRelation(posted_data, db_col)
+            RelationService.DBRelation(posted_data, db_col)
         
         result = "Request was sent"
     else:
