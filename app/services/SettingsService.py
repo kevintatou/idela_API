@@ -18,7 +18,7 @@ def SettingsHandler(settings_req):
             'weekly': int, 
             'nodes': str,
             'email': str,
-            'owner': str,
+            'owners': str,
             'members': str,
             'comment' : str,
             'type': str,
@@ -42,7 +42,7 @@ def SettingsHandler(settings_req):
             'name',
             'type',
             'public',
-            'owner'
+            'owners'
         ]
     #Minimum requirements for User creation
     elif settings_req == "min_req_user":
@@ -88,7 +88,7 @@ def SettingsHandler(settings_req):
             'type': '',
             'views': 0,
             'user': {
-                'owner': [
+                'owners': [
                     ''
                 ],
                 'members': [
