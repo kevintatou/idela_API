@@ -1,4 +1,4 @@
-app/services/conn.py
+
 server/server/settings.py
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -96,7 +96,6 @@ app/controllers/__init__.py
 app/services/__init__.py
 idela/__init__.py
 
-app/services/conn.py
 
 app/__pycache__/
 app/controllers/__pycache__/
