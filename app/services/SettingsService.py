@@ -5,7 +5,8 @@ def SettingsHandler(settings_req):
         return {
             'col': str,
             'desc': str,
-            'name': str, 
+            'fname': str,
+            'lname': str, 
             'id': str, 
             'public': int, 
             'tags': str, 
@@ -19,7 +20,10 @@ def SettingsHandler(settings_req):
             'email': str,
             'owner': str,
             'members': str,
-            'comment' : str
+            'comment' : str,
+            'type': str,
+            'token_type': str,
+            'token_value': str
         }
     #MongoDB collections
     elif settings_req == "db_collections":
@@ -46,7 +50,8 @@ def SettingsHandler(settings_req):
             'fname',
             'lname',
             'email',
-            'tokens'
+            'token_type',
+            'token_value'
         ]
     #Minimum requirements for Tag creation
     elif settings_req == "min_req_tags":
@@ -108,7 +113,12 @@ def SettingsHandler(settings_req):
             'lname': '',
             'email': '',
             'desc': '',
-            'tokens': '',
+            'tokens': [
+                {
+                    'token_type': '',
+                    'token_value': ''
+                }
+            ],
             'nodes': [
                 ''
             ],

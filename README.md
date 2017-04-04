@@ -24,33 +24,37 @@ Gets everythings where `key`=`value`.
 Gets everythings where `key`=`value` and `key2`=`value2` and `value3`.
 ```
 #### Get Requests - Allowed keys
-'alias',
-'col',
-'date',
-'email'
-'id',
-'media',
-'name',
-'nodes',
-'public',
-'tags',
-'trending',
-'views',
-'weekly',
+'col': str,
+'desc': str,
+'name': str, 
+'id': str, 
+'public': int, 
+'tags': str, 
+'views': int, 
+'trend': int, 
+'media': int, 
+'date': int, 
+'alias': str, 
+'weekly': int, 
+'nodes': str,
+'email': str,
+'owners': str,
+'members': str,
+'comment' : str
 #### Get Requests - Example
 /get/`col`=`node`
 ```
 Gets all documents from 'collection' named 'node' in the database.
 ```
-/get/`col`=`node`&`owner`=`liam`
+/get/`col`=`node`&`owners`=`liam`
 ```
 Gets all documents from 'collection' named 'node' in the database 
-where key is 'owner' and has the value 'liam'.
+where key is 'owners' and has the value 'liam'.
 ```
 /get/`col`=`node`&`members`=`liam,kevin`
 ```
 Gets all documents from 'collection' named 'node' in the database 
-where key is 'owner' and has the value 'liam' and 'kevin'.
+where key is 'owners' and has the value 'liam' and 'kevin'.
 ```
 
 ### Post Requests
@@ -59,9 +63,9 @@ where key is 'owner' and has the value 'liam' and 'kevin'.
 ```
 [
     {
-        key: value,
-        key2: value2
-        key3: value3,value4
+        "key": "value",
+        "key2": "value2",
+        "key3": "value3,value4"
     }
 ]
 ```
@@ -69,19 +73,21 @@ Posts a json object to /post with keys including values
 #### Post Requests - Minimum Requirements
 ##### User
 ```
-'col': 'user',
-'firstname': '',
-'lastname': '',
+'col': 'user'
+'fname': '',
+'lname': '',
 'email': '',
-'tokens' ''
+'token_key': '',
+'token_value': ''
 ```
 ##### Nodes
 ```
 'col': 'node',
 'tags': '',
 'name': '',
-'public': 0,
-'owner': ''
+'type': '',
+'public': '',
+'owners': ''
 ```
 ##### Tags
 ```
@@ -120,7 +126,7 @@ Posts a json object to /post with keys including values
 'image': '',
 'media': '',
 'views': 0,
-'owner': '',
+'owners': '',
 'members': '',
 'trending': 0,
 'quality_score': 0,
@@ -142,15 +148,15 @@ Posts a json object to /post with keys including values
 ```
 [
     {
-        'col': 'node',
-        'tags': 'github,code',
-        'name': 'Bob the Coder',
-        'public': 1,
-        'owner': '0560940564',
-        'members': '095609507 04793912'
+        "col": "node",
+        "tags": "github,code",
+        "name": "Bob the Coder",
+        "public": 1,
+        "owners": "0560940564",
+        "members": "095609507 04793912"
     }
 ]
 ```
-Requests a json object to post. Request want to be put in node collection `'col': 'node'` in DB with keys containing a value `'name': 'Bob the Coder'`ect. The tags key `'tags': 'github,code'` gets split by comma into a array of strings `['github','code']`, meaning the node gets two tags not a single tag. The same goes with members key. Note that `owner` and `members` values are MongoDB ObjectID(s).
+Requests a json object to post. Request want to be put in node collection `'col': 'node'` in DB with keys containing a value `'name': 'Bob the Coder'`ect. The tags key `'tags': 'github,code'` gets split by comma into a array of strings `['github','code']`, meaning the node gets two tags not a single tag. The same goes with members key. Note that `owners` and `members` values are MongoDB ObjectID(s).
 
 When posting a node tags related to that node get automaticly updated and new tags get created if they dont exist in the database.
