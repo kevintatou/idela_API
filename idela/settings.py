@@ -41,6 +41,19 @@ CORS_ORIGIN_WHITELIST = (
     'http://www.idela.se'
     '207.154.211.98:8080',
     'http://idela.se'
+    'http://207.154.211.98:80',
+    '207.154.211.98:80'
+    'http://207.154.211.98',
+    '207.154.211.98',
+    'www.idela.se',
+    'idela.se',
+    'localhost:4200',
+    'http://192.168.10.123/',
+    '192.168.10.123',
+    'http://localhost:8080',
+    'localhost:8080',
+    'http://207.154.211.98:8080',
+    '207.154.211.98:8080'
 )
 
 # Application definition

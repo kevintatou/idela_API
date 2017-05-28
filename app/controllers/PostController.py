@@ -1,51 +1,63 @@
 from django.shortcuts import HttpResponse
+from django.http import JsonResponse
 from app.services.conn import *
+import json
 #Defining services
-from app.services import PostService
-import datetime
-import random
-from faker import Faker
-fake = Faker()
+from app.services import PostService, ValidateService, SettingsService, RelationService, FormatService
+import time
 
-# Post User data
 def Post(request):
-    date = datetime.datetime.utcnow()
+    #Fetches time
+    start_time = time.monotonic()
+    
+    ########### Tasks - To Do ###########
+    #Authenticate user
 
+    #Defining variables
+    result = str
 
-    data = {
-            "date" : date,
-            "weekly" : random.randint(1,100),
-            "tags" : [ 
-                'koda',
-                'facebook',
-                'live'
-            ],
-            "desc" : "Följ Liam i hans maniska kodsession live via Facebook's API",
-            "flags" : {
-                "comment" : "",
-                "rating" : ""
-            },
-            "name" : 'Liam kodar',
-            "public" : 1,
-            "token" : "",
-            "image" : "http://www.annatroberg.se/wp-content/uploads/2014/02/iStock_000016095582Small-1508x706_c.jpg",
-            "media" : "",
-            "views" : random.randint(1,10000),
-            "users" : {
-                "owner" : "5889b49cfc0e722b749e7026",
-                "members" : "5889b3f4fc0e7225f4605928"
-            },
-            "trending" : random.randint(1,100),
-            "rating" : {
-                "quality_score" : random.randint(1,100),
-                "opinion_score" : random.randint(1,100),
-                "relevance_score" : random.randint(1,100),
-                "opinion_votes" : random.randint(1,100),
-                "quality_votes" : random.randint(1,100),
-                "relevance_votes" : random.randint(1,100),
-            }
-    }
+    #Decodes json and unlists it
+    request = json.loads(request.body.decode("utf-8"))[0]
 
+    db_col = request['col']
 
-    return HttpResponse(PostService.InsertData(node, data))
+    #Gets proper variables from SettingsService
+    if db_col == 'node':
+        min_requirement = SettingsService.SettingsHandler('min_req_node')
+        db_col_structure = SettingsService.SettingsHandler('db_collection_node')
+    elif db_col == 'user':
+        min_requirement = SettingsService.SettingsHandler('min_req_user')
+        db_col_structure = SettingsService.SettingsHandler('db_collection_user')
+    elif db_col == 'tags':
+        min_requirement = SettingsService.SettingsHandler('min_req_tags')
+        db_col_structure = SettingsService.SettingsHandler('db_collection_tags')
+    elif db_col == 'placeholder':
+        min_requirement = SettingsService.SettingsHandler('min_req_placeholder')
+        db_col_structure = SettingsService.SettingsHandler('db_collection_placeholder')
+    
+    #Check minimum requirements
+    if ValidateService.ValidateMinRequire(request, min_requirement):
+
+        #Structure the request for MongoDB Post
+        formated_request = FormatService.FormatDict(request, db_col_structure, True)
+
+        #Removes _id because it confuses MongoDB
+        if '_id' in formated_request:
+            del formated_request['_id']
+        
+        #Posts to MongoDB
+        posted_data = PostService.PostRequest(formated_request, db_col)
+        
+        if db_col == 'node':
+            #Create relations
+            RelationService.DBRelation(posted_data, db_col)
+        
+        result = "Request was sent"
+    else:
+        result = "Minimum requirements were not met"
+    
+    #Prints process duration
+    print("API PostController process took:", time.monotonic() - start_time, "sec")
+
+    return HttpResponse(result)
     

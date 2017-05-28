@@ -1,35 +1,25 @@
 from app.services.conn import *
 import datetime
 
-# Posts data into given entity's collection
+#IN: Formated dict for post request use
+#OUT: The post request with ObjectID
+#Posts data into given entity's collection
+def PostRequest(request, col):
+    #Timestamp
+    request['created'] = datetime.datetime.utcnow()
 
+    eval(col).insert(request)
 
-def InsertData(*args):
-    args[1]['date'] = datetime.datetime.utcnow()
-    args[0].insert_one(args[1])
+    return request
+
+#IN: Formated dicts in a list for post request use
+#OUT: The post requests with ObjectIDs
+#Post multiple documents at once(Single documents does work too)
+def PostRequestMany(request, col):
+    #Timestamp every dict in the request list
+    for item in request:
+        item['created'] = datetime.datetime.utcnow()
     
+    eval(col).insert_many(request).inserted_ids
 
-
-'''
-def InsertData(req_values):
-    #Defining variables
-    collection = None
-    attribute = None
-
-    for item in req_values:
-        if item == 'collection':
-            collection = eval(req_values['collection'][0])
-        elif item == 'attribute':
-            attribute = req_values['attribute']
-    
-    #attribute['date'] = datetime.datetime.utcnow()
-
-    print(attribute)
-    
-    test = {
-        name: 'name'
-    }
-
-    node.insert_one(test)
-'''
-
+    return request

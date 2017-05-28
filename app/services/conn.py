@@ -1,7 +1,5 @@
 from pymongo import MongoClient
 
-
-
 client = MongoClient('localhost', 27017)
 #print(client.test.command('buildinfo'))
 
@@ -14,3 +12,12 @@ node = db.node
 tag = db.tag
 feedback = db.feedback
 softdelete = db.softdelete
+
+#user = db.user_test
+#node = db.node_test
+#tag = db.tag_test
+#feedback = db.feedback_test
+softdelete = db.softdelete_test
+
+#Jespers Kandidat
+placeholder = db.placeholder
